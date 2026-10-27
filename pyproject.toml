@@ -1,0 +1,23 @@
+[project]
+name = "tres-dimensiones"
+version = "0.1.0"
+description = "Metodo de decision empresarial en tres dimensiones: demanda pagadora, sencillez de entrega y retorno con exposicion acotada"
+readme = "README.md"
+license = "Apache-2.0"
+authors = [{ name = "Kenyi Martín Alcantara" }]
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.26", "scipy>=1.11"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/tres_dimensiones"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

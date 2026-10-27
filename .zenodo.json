@@ -1,0 +1,17 @@
+{
+  "title": "tres-dimensiones: método de decisión empresarial en tres dimensiones",
+  "upload_type": "software",
+  "description": "Implementación de referencia del método de decisión empresarial en tres dimensiones (demanda pagadora, sencillez de entrega y retorno con exposición acotada), con actualización beta-binomial, desviación de costes lognormal con estrés de Pareto, restricción probabilística sobre la caja acumulada y valor esperado de la información muestral.",
+  "creators": [
+    {
+      "name": "Martín Alcantara, Kenyi",
+      "affiliation": "Fundador Supremo S.L.",
+      "orcid": "0009-0000-7175-6137"
+    }
+  ],
+  "license": "Apache-2.0",
+  "keywords": ["decision analysis", "Bayesian inference", "value of information", "affordable loss", "reference class forecasting"],
+  "related_identifiers": [
+    {"identifier": "10.5281/zenodo.23687822", "relation": "isSupplementTo", "resource_type": "publication-workingpaper"}
+  ]
+}

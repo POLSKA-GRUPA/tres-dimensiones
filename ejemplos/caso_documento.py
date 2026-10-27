@@ -1,0 +1,118 @@
+"""Casos hipoteticos del documento de trabajo (seccion 7). Reproducen sus cifras.
+
+    python ejemplos/caso_documento.py          # informe legible
+    python ejemplos/caso_documento.py --json   # resultados para tablas
+
+Todos los datos son hipoteticos. Los parametros por defecto proceden de
+tres_dimensiones.calibracion y se justifican en la seccion 6.4.
+"""
+
+from __future__ import annotations
+
+import json
+import sys
+
+from tres_dimensiones import (CreenciaConversion, Mercado, OpcionEntrega, Umbrales, decidir,
+                              perdida_asumible, tolerancia_riesgo_propietario, valor_informacion)
+from tres_dimensiones.calibracion import (DESVIACION_ALTA, DESVIACION_BAJA, DESVIACION_CENTRAL,
+                                          DESVIACION_ESTRES, EPSILON)
+from tres_dimensiones.regla import Aleatorios
+
+SEMILLA = 20261027
+N = 100_000
+COLCHON = 60_000  # caja liquida del decisor (hipotetica)
+
+ASISTIDO = OpcionEntrega("Servicio asistido (nivel 2)", 2, construccion=3_000, fijo_mensual=150,
+                         coste_variable=120, horas_contrato=4.0, horas_fijas_mes=4,
+                         coste_hora=45, capacidad_mes=60)
+AUTOMATIZADO = OpcionEntrega("Producto automatizado (nivel 4)", 4, construccion=24_000,
+                             fijo_mensual=900, coste_variable=40, horas_contrato=0.5,
+                             horas_fijas_mes=10, coste_hora=45, capacidad_mes=60)
+LIGERO = OpcionEntrega("Producto ligero (nivel 4)", 4, construccion=6_000, fijo_mensual=400,
+                       coste_variable=40, horas_contrato=0.5, horas_fijas_mes=8,
+                       coste_hora=45, capacidad_mes=60)
+MEDIO = OpcionEntrega("Producto intermedio (nivel 4)", 4, construccion=9_000, fijo_mensual=400,
+                      coste_variable=40, horas_contrato=0.5, horas_fijas_mes=8,
+                      coste_hora=45, capacidad_mes=60)
+
+MERCADO_A = Mercado(precio=900, compradores_horizonte=150)
+MERCADO_BC = Mercado(precio=900, compradores_horizonte=200)
+
+
+def umbrales(epsilon: float = EPSILON) -> Umbrales:
+    return Umbrales(epsilon=epsilon,
+                    perdida=perdida_asumible(tolerancia_riesgo_propietario(COLCHON), epsilon))
+
+
+def evaluar(creencia, opciones, mercado, desviacion=DESVIACION_CENTRAL, epsilon=EPSILON,
+            prueba: tuple[int, float] | None = None) -> dict:
+    alea = Aleatorios.generar(SEMILLA, N, mercado.meses, desviacion)
+    u = umbrales(epsilon)
+    dec = decidir(creencia, opciones, mercado, u, alea)
+    out = {
+        "creencia": [creencia.alpha, creencia.beta], "media": creencia.media,
+        "ic90": creencia.intervalo(0.90), "L": u.perdida, "epsilon": u.epsilon,
+        "opciones": [{"opcion": e.opcion, "theta_min": e.theta_min,
+                      "p_theta_bajo_min": e.prob_theta_bajo_min, **e.resumen,
+                      "umbrales": e.umbrales, "admisible": e.admisible} for e in dec.evaluaciones],
+        "decision": dec.elegida, "valor": dec.valor,
+    }
+    if prueba:
+        vi = valor_informacion(creencia, prueba[0], prueba[1], opciones, mercado, u, alea)
+        out["prueba"] = {"ofertas": vi.ofertas, "coste": vi.coste, "evsi_bruto": vi.evsi_bruto,
+                         "realizar": vi.realizar,
+                         "ramas": [{"k": r.compras, "prob": r.probabilidad, "decision": r.decision,
+                                    "valor": r.valor} for r in vi.ramas]}
+    return out
+
+
+def casos() -> dict:
+    a = CreenciaConversion().actualizar(12, 3)
+    return {
+        "A_asistido_vs_automatizado": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, prueba=(5, 400)),
+        "B_producto_ligero_evidencia_debil": evaluar(CreenciaConversion().actualizar(5, 0), (LIGERO,),
+                                                     MERCADO_BC, prueba=(5, 500)),
+        "C_producto_intermedio_coste_central": evaluar(CreenciaConversion().actualizar(6, 2), (MEDIO,),
+                                                       MERCADO_BC),
+        "C_producto_intermedio_coste_acotado": evaluar(CreenciaConversion().actualizar(6, 2), (MEDIO,),
+                                                       MERCADO_BC, desviacion=DESVIACION_BAJA),
+        "sensibilidad_A": {
+            "desviacion_baja": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, DESVIACION_BAJA),
+            "desviacion_alta": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, DESVIACION_ALTA),
+            "estres_pareto": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, DESVIACION_ESTRES),
+            "epsilon_0.01": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, epsilon=0.01),
+            "epsilon_0.10": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, epsilon=0.10),
+            "inicial_jeffreys": evaluar(CreenciaConversion(0.5, 0.5).actualizar(12, 3),
+                                        (ASISTIDO, AUTOMATIZADO), MERCADO_A),
+        },
+    }
+
+
+def _imprimir(nombre: str, r: dict) -> None:
+    lo, hi = r["ic90"]
+    print(f"\n== {nombre} ==\nBeta({r['creencia'][0]:g}, {r['creencia'][1]:g}) media {r['media']:.3f} "
+          f"IC90 {lo:.3f}-{hi:.3f} | L {r['L']:,.0f} EUR | epsilon {r['epsilon']}")
+    for o in r["opciones"]:
+        print(f"  {o['opcion']}: theta_min {o['theta_min']:.3f}, Pr(theta<min) {o['p_theta_bajo_min']:.3f}, "
+              f"delta {o['delta']:.3f}, valor econ. {o['valor_economico_medio']:,.0f} "
+              f"(P10 {o['valor_economico_p10']:,.0f}; P90 {o['valor_economico_p90']:,.0f}), "
+              f"Pr(exposicion) {o['prob_exposicion']:.3f}, {o['umbrales']}")
+    print(f"  DECISION: {r['decision']} ({r['valor']:,.0f} EUR)")
+    if "prueba" in r:
+        p = r["prueba"]
+        for rama in p["ramas"]:
+            print(f"    k={rama['k']} p={rama['prob']:.3f} -> {rama['decision']} ({rama['valor']:,.0f})")
+        print(f"  EVSI bruto {p['evsi_bruto']:,.0f} frente a coste {p['coste']:,.0f}: realizar {p['realizar']}")
+
+
+if __name__ == "__main__":
+    resultados = casos()
+    if "--json" in sys.argv:
+        print(json.dumps(resultados, indent=2, ensure_ascii=False))
+    else:
+        for nombre, r in resultados.items():
+            if nombre == "sensibilidad_A":
+                for sub, rr in r.items():
+                    _imprimir(f"Sensibilidad A: {sub}", rr)
+            else:
+                _imprimir(nombre, r)
