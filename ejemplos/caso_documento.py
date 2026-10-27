@@ -17,9 +17,10 @@ from tres_dimensiones import (CreenciaConversion, Mercado, OpcionEntrega, Umbral
                               perdida_asumible, tolerancia_riesgo_propietario, valor_informacion)
 from tres_dimensiones.calibracion import (DELTA, DESVIACION_ALTA, DESVIACION_BAJA,
                                           DESVIACION_CENTRAL, DESVIACION_ESTRES, EPSILON)
-from tres_dimensiones.regla import Aleatorios
+from tres_dimensiones.regla import Aleatorios, valor_informacion_replicado
 
 SEMILLA = 20261027
+REPLICAS = (101, 202, 303, 404, 505)
 N = 100_000
 COLCHON = 60_000  # caja liquida del decisor (hipotetica)
 
@@ -63,6 +64,14 @@ def evaluar(creencia, opciones, mercado, desviacion=DESVIACION_CENTRAL, epsilon=
     }
     if prueba:
         vi = valor_informacion(creencia, prueba[0], prueba[1], opciones, mercado, u, alea)
+        rep = valor_informacion_replicado(creencia, prueba[0], prueba[1], opciones, mercado, u,
+                                          desviacion, REPLICAS, N // 4)
+        out["replicas"] = {"semillas": list(REPLICAS), "n_por_replica": N // 4,
+                           "incremento_medio": rep.incremento_medio,
+                           "error_replicas": rep.error_replicas,
+                           "evsi_clasico_medio": rep.evsi_clasico_medio,
+                           "decisiones_estables": rep.decisiones_estables,
+                           "realizar": rep.realizar}
         out["prueba"] = {"ofertas": vi.ofertas, "coste": vi.coste,
                          "incremento_politica": vi.incremento_politica,
                          "evsi_clasico": vi.evsi_clasico,
@@ -128,6 +137,10 @@ def _imprimir(nombre: str, r: dict) -> None:
         p = r["prueba"]
         for rama in p["ramas"]:
             print(f"    k={rama['k']} p={rama['prob']:.3f} -> {rama['decision']} ({rama['valor']:,.0f})")
+        rp = r["replicas"]
+        print(f"  Replicas independientes ({len(rp['semillas'])} x {rp['n_por_replica']:,}): incremento medio "
+              f"{rp['incremento_medio']:,.0f} (error {rp['error_replicas']:,.0f}), decisiones estables "
+              f"{rp['decisiones_estables']}, realizar {rp['realizar']}")
         print(f"  Incremento de la politica {p['incremento_politica']:,.0f} (EVSI clasico {p['evsi_clasico']:,.0f}; "
               f"errores MC {_fmt(p['error_incremento'])} y {_fmt(p['error_evsi'])}) frente a coste "
               f"{p['coste']:,.0f}: realizar {p['realizar']}")

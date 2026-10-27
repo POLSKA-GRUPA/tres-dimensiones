@@ -125,6 +125,9 @@ def _delta_bayes(valor: np.ndarray, theta: np.ndarray, tmin: float) -> float:
 
 def decidir(creencia: CreenciaConversion, opciones: tuple[OpcionEntrega, ...],
             mercado: Mercado, umbrales: Umbrales, aleatorios: Aleatorios) -> Decision:
+    nombres = [op.nombre for op in opciones]
+    if len(set(nombres)) != len(nombres) or DESCARTAR in nombres:
+        raise ValueError("Los nombres de las opciones deben ser unicos y distintos de la opcion de descartar")
     theta = np.asarray(creencia.cuantil(aleatorios.u_theta), dtype=float)
     n = theta.size
     evaluaciones, valores = [], {}
@@ -230,3 +233,52 @@ def valor_informacion(creencia: CreenciaConversion, ofertas_prueba: int, coste_p
     return ValorInformacion(ofertas_prueba, coste_prueba, actual.elegida, actual.valor,
                             tuple(ramas), float(dif.mean()), float(dif_ve.mean()),
                             _error(dif, aleatorios.cola_pesada), _error(dif_ve, aleatorios.cola_pesada))
+
+
+@dataclass(frozen=True, slots=True)
+class ValorInformacionReplicado:
+    """Valor de una prueba estimado con replicas independientes.
+
+    Cada replica repite el analisis completo con otros numeros aleatorios, de
+    modo que la dispersion entre replicas recoge tambien la incertidumbre de
+    seleccion de la accion cerca de los umbrales.
+    """
+
+    replicas: tuple[ValorInformacion, ...]
+    coste: float
+
+    @property
+    def incremento_medio(self) -> float:
+        return float(np.mean([r.incremento_politica for r in self.replicas]))
+
+    @property
+    def error_replicas(self) -> float:
+        x = np.array([r.incremento_politica for r in self.replicas])
+        return float(x.std(ddof=1) / math.sqrt(x.size))
+
+    @property
+    def evsi_clasico_medio(self) -> float:
+        return float(np.mean([r.evsi_clasico for r in self.replicas]))
+
+    @property
+    def decisiones_estables(self) -> bool:
+        """Todas las replicas eligen lo mismo en cada rama y sin prueba."""
+        firmas = {(r.decision_actual,) + tuple(b.decision for b in r.ramas) for r in self.replicas}
+        return len(firmas) == 1
+
+    @property
+    def realizar(self) -> bool:
+        return self.incremento_medio - 2 * self.error_replicas > self.coste
+
+
+def valor_informacion_replicado(creencia: CreenciaConversion, ofertas_prueba: int, coste_prueba: float,
+                                opciones: tuple[OpcionEntrega, ...], mercado: Mercado,
+                                umbrales: Umbrales, desviacion: DesviacionCoste,
+                                semillas: tuple[int, ...], n: int) -> ValorInformacionReplicado:
+    if len(semillas) < 2 or len(set(semillas)) != len(semillas):
+        raise ValueError("Se requieren al menos dos semillas distintas")
+    replicas = tuple(
+        valor_informacion(creencia, ofertas_prueba, coste_prueba, opciones, mercado, umbrales,
+                          Aleatorios.generar(s, n, mercado.meses, desviacion))
+        for s in semillas)
+    return ValorInformacionReplicado(replicas, coste_prueba)

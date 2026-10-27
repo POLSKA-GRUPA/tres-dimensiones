@@ -12,7 +12,7 @@ from tres_dimensiones import (DESCARTAR, CreenciaConversion, DesviacionCoste, Me
 from tres_dimensiones.adaptadores.motor_caja import financiacion_por_motor, motor_referencia
 from tres_dimensiones.exposicion import caja_desde_flujos
 from tres_dimensiones.modelo import simular_opcion
-from tres_dimensiones.regla import Aleatorios
+from tres_dimensiones.regla import Aleatorios, valor_informacion_replicado
 
 OPCION = OpcionEntrega("Prueba", 2, construccion=3_000, fijo_mensual=150, coste_variable=120,
                        horas_contrato=4.0, horas_fijas_mes=4, coste_hora=45, capacidad_mes=60)
@@ -239,3 +239,17 @@ def test_aleatorios_rechaza_uniformes_no_interiores(u):
 def test_aleatorios_rechaza_tamano_insuficiente():
     with pytest.raises(ValueError):
         Aleatorios(np.array([0.5]), np.array([1.0]), np.full((1, 12), 0.5))
+
+
+def test_nombres_duplicados_se_rechazan():
+    with pytest.raises(ValueError):
+        decidir(CreenciaConversion(), (OPCION, OPCION), MERCADO, UMBRALES, _alea(100))
+
+
+def test_replicas_independientes_recogen_incertidumbre_de_seleccion():
+    rep = valor_informacion_replicado(CreenciaConversion().actualizar(12, 3), 5, 400, (OPCION,), MERCADO,
+                                      UMBRALES, DesviacionCoste(1.25, 3.0), (1, 2, 3), 5_000)
+    assert len(rep.replicas) == 3
+    assert rep.decisiones_estables
+    assert not rep.realizar
+    assert rep.error_replicas >= 0

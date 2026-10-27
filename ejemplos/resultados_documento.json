@@ -56,6 +56,21 @@
     "valor": 14624.823423163698,
     "error_mc": 37.705556738602965,
     "decision_valor_esperado": "Servicio asistido (nivel 2)",
+    "replicas": {
+      "semillas": [
+        101,
+        202,
+        303,
+        404,
+        505
+      ],
+      "n_por_replica": 25000,
+      "incremento_medio": -4.0692979487102665,
+      "error_replicas": 3.439039402478283,
+      "evsi_clasico_medio": -4.0692979487102665,
+      "decisiones_estables": true,
+      "realizar": false
+    },
     "prueba": {
       "ofertas": 5,
       "coste": 400,
@@ -142,6 +157,21 @@
     "valor": 0.0,
     "error_mc": 0.0,
     "decision_valor_esperado": "Producto ligero (nivel 4)",
+    "replicas": {
+      "semillas": [
+        101,
+        202,
+        303,
+        404,
+        505
+      ],
+      "n_por_replica": 25000,
+      "incremento_medio": 4441.283664011957,
+      "error_replicas": 8.34687226506213,
+      "evsi_clasico_medio": 4084.275411236567,
+      "decisiones_estables": true,
+      "realizar": true
+    },
     "prueba": {
       "ofertas": 5,
       "coste": 500,
