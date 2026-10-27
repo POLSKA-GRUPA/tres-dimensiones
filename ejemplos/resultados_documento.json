@@ -765,6 +765,356 @@
       "error_mc": 37.964321073931465,
       "decision_valor_esperado": "Servicio asistido (nivel 2)"
     },
+    "estres_pareto_semillas": {
+      "1": {
+        "creencia": [
+          4.0,
+          10.0
+        ],
+        "media": 0.2857142857142857,
+        "ic90": [
+          0.11266578079028224,
+          0.4946497301513655
+        ],
+        "L": 29957.32273553991,
+        "epsilon": 0.05,
+        "delta": 0.25,
+        "opciones": [
+          {
+            "opcion": "Servicio asistido (nivel 2)",
+            "theta_min": 0.07733333333333334,
+            "p_theta_bajo_min": 0.014490306485824186,
+            "delta_bayes": 0.5034641798947459,
+            "van_caja_medio": 18321.955394135173,
+            "valor_economico_medio": 8941.883436286855,
+            "valor_economico_p10": -2689.2306596565168,
+            "valor_economico_p90": 29979.896868617998,
+            "caja_minima_p05": -22149.34710536413,
+            "prob_exposicion": 0.03381,
+            "demanda_perdida_media": 9.700361917762267e-05,
+            "umbrales": {
+              "d1_demanda": true,
+              "d2_capacidad": true,
+              "d3_exposicion": true
+            },
+            "admisible": true
+          },
+          {
+            "opcion": "Producto automatizado (nivel 4)",
+            "theta_min": 0.32,
+            "p_theta_bajo_min": 0.6397672577861382,
+            "delta_bayes": null,
+            "van_caja_medio": -60869.88285914883,
+            "valor_economico_medio": -66916.29371877402,
+            "valor_economico_p10": -109941.49007767206,
+            "valor_economico_p90": 16719.947595545556,
+            "caja_minima_p05": -204285.39664589218,
+            "prob_exposicion": 0.53087,
+            "demanda_perdida_media": 0.0,
+            "umbrales": {
+              "d1_demanda": false,
+              "d2_capacidad": true,
+              "d3_exposicion": false
+            },
+            "admisible": false
+          }
+        ],
+        "decision": "Servicio asistido (nivel 2)",
+        "valor": 8941.883436286855,
+        "error_mc": null,
+        "decision_valor_esperado": "Servicio asistido (nivel 2)"
+      },
+      "2": {
+        "creencia": [
+          4.0,
+          10.0
+        ],
+        "media": 0.2857142857142857,
+        "ic90": [
+          0.11266578079028224,
+          0.4946497301513655
+        ],
+        "L": 29957.32273553991,
+        "epsilon": 0.05,
+        "delta": 0.25,
+        "opciones": [
+          {
+            "opcion": "Servicio asistido (nivel 2)",
+            "theta_min": 0.07733333333333334,
+            "p_theta_bajo_min": 0.014490306485824186,
+            "delta_bayes": 0.5351017736066112,
+            "van_caja_medio": 18562.7956131597,
+            "valor_economico_medio": 9175.944160080939,
+            "valor_economico_p10": -2832.610860028197,
+            "valor_economico_p90": 30035.26452467374,
+            "caja_minima_p05": -22293.318796786807,
+            "prob_exposicion": 0.034,
+            "demanda_perdida_media": 9.423893652937254e-05,
+            "umbrales": {
+              "d1_demanda": true,
+              "d2_capacidad": true,
+              "d3_exposicion": true
+            },
+            "admisible": true
+          },
+          {
+            "opcion": "Producto automatizado (nivel 4)",
+            "theta_min": 0.32,
+            "p_theta_bajo_min": 0.6397672577861382,
+            "delta_bayes": null,
+            "van_caja_medio": -59297.8369657915,
+            "valor_economico_medio": -65345.09060410516,
+            "valor_economico_p10": -109504.68890263047,
+            "valor_economico_p90": 16945.269663890547,
+            "caja_minima_p05": -203963.39483097685,
+            "prob_exposicion": 0.53182,
+            "demanda_perdida_media": 0.0,
+            "umbrales": {
+              "d1_demanda": false,
+              "d2_capacidad": true,
+              "d3_exposicion": false
+            },
+            "admisible": false
+          }
+        ],
+        "decision": "Servicio asistido (nivel 2)",
+        "valor": 9175.944160080939,
+        "error_mc": null,
+        "decision_valor_esperado": "Servicio asistido (nivel 2)"
+      },
+      "3": {
+        "creencia": [
+          4.0,
+          10.0
+        ],
+        "media": 0.2857142857142857,
+        "ic90": [
+          0.11266578079028224,
+          0.4946497301513655
+        ],
+        "L": 29957.32273553991,
+        "epsilon": 0.05,
+        "delta": 0.25,
+        "opciones": [
+          {
+            "opcion": "Servicio asistido (nivel 2)",
+            "theta_min": 0.07733333333333334,
+            "p_theta_bajo_min": 0.014490306485824186,
+            "delta_bayes": 0.5860854728780021,
+            "van_caja_medio": 19385.58220111965,
+            "valor_economico_medio": 10010.512377997504,
+            "valor_economico_p10": -2678.244352579053,
+            "valor_economico_p90": 30019.790255951477,
+            "caja_minima_p05": -21930.026665236244,
+            "prob_exposicion": 0.03341,
+            "demanda_perdida_media": 9.503530968970139e-05,
+            "umbrales": {
+              "d1_demanda": true,
+              "d2_capacidad": true,
+              "d3_exposicion": true
+            },
+            "admisible": true
+          },
+          {
+            "opcion": "Producto automatizado (nivel 4)",
+            "theta_min": 0.32,
+            "p_theta_bajo_min": 0.6397672577861382,
+            "delta_bayes": null,
+            "van_caja_medio": -53000.96025362667,
+            "valor_economico_medio": -59046.73837892906,
+            "valor_economico_p10": -108706.90795775593,
+            "valor_economico_p90": 16995.353140544987,
+            "caja_minima_p05": -201140.11480849757,
+            "prob_exposicion": 0.5287,
+            "demanda_perdida_media": 0.0,
+            "umbrales": {
+              "d1_demanda": false,
+              "d2_capacidad": true,
+              "d3_exposicion": false
+            },
+            "admisible": false
+          }
+        ],
+        "decision": "Servicio asistido (nivel 2)",
+        "valor": 10010.512377997504,
+        "error_mc": null,
+        "decision_valor_esperado": "Servicio asistido (nivel 2)"
+      },
+      "4": {
+        "creencia": [
+          4.0,
+          10.0
+        ],
+        "media": 0.2857142857142857,
+        "ic90": [
+          0.11266578079028224,
+          0.4946497301513655
+        ],
+        "L": 29957.32273553991,
+        "epsilon": 0.05,
+        "delta": 0.25,
+        "opciones": [
+          {
+            "opcion": "Servicio asistido (nivel 2)",
+            "theta_min": 0.07733333333333334,
+            "p_theta_bajo_min": 0.014490306485824186,
+            "delta_bayes": 0.23387929448295836,
+            "van_caja_medio": 16463.30449391358,
+            "valor_economico_medio": 7080.932703167737,
+            "valor_economico_p10": -2718.633252051911,
+            "valor_economico_p90": 29966.773160842695,
+            "caja_minima_p05": -22315.86423592201,
+            "prob_exposicion": 0.03421,
+            "demanda_perdida_media": 9.165114341470395e-05,
+            "umbrales": {
+              "d1_demanda": true,
+              "d2_capacidad": true,
+              "d3_exposicion": true
+            },
+            "admisible": true
+          },
+          {
+            "opcion": "Producto automatizado (nivel 4)",
+            "theta_min": 0.32,
+            "p_theta_bajo_min": 0.6397672577861382,
+            "delta_bayes": null,
+            "van_caja_medio": -74450.85152392578,
+            "valor_economico_medio": -80497.53773270603,
+            "valor_economico_p10": -109130.94627721957,
+            "valor_economico_p90": 16760.608117006905,
+            "caja_minima_p05": -205003.41301592224,
+            "prob_exposicion": 0.52782,
+            "demanda_perdida_media": 0.0,
+            "umbrales": {
+              "d1_demanda": false,
+              "d2_capacidad": true,
+              "d3_exposicion": false
+            },
+            "admisible": false
+          }
+        ],
+        "decision": "Servicio asistido (nivel 2)",
+        "valor": 7080.932703167737,
+        "error_mc": null,
+        "decision_valor_esperado": "Servicio asistido (nivel 2)"
+      },
+      "5": {
+        "creencia": [
+          4.0,
+          10.0
+        ],
+        "media": 0.2857142857142857,
+        "ic90": [
+          0.11266578079028224,
+          0.4946497301513655
+        ],
+        "L": 29957.32273553991,
+        "epsilon": 0.05,
+        "delta": 0.25,
+        "opciones": [
+          {
+            "opcion": "Servicio asistido (nivel 2)",
+            "theta_min": 0.07733333333333334,
+            "p_theta_bajo_min": 0.014490306485824186,
+            "delta_bayes": 0.5232266487443549,
+            "van_caja_medio": 18501.22988308543,
+            "valor_economico_medio": 9112.673168889854,
+            "valor_economico_p10": -2732.079524292059,
+            "valor_economico_p90": 30094.13454879174,
+            "caja_minima_p05": -22168.68408537218,
+            "prob_exposicion": 0.03437,
+            "demanda_perdida_media": 0.00010115865416854531,
+            "umbrales": {
+              "d1_demanda": true,
+              "d2_capacidad": true,
+              "d3_exposicion": true
+            },
+            "admisible": true
+          },
+          {
+            "opcion": "Producto automatizado (nivel 4)",
+            "theta_min": 0.32,
+            "p_theta_bajo_min": 0.6397672577861382,
+            "delta_bayes": null,
+            "van_caja_medio": -59790.48949084112,
+            "valor_economico_medio": -65837.96546081487,
+            "valor_economico_p10": -109478.11923204194,
+            "valor_economico_p90": 16827.18856198618,
+            "caja_minima_p05": -203887.0136455344,
+            "prob_exposicion": 0.5315,
+            "demanda_perdida_media": 0.0,
+            "umbrales": {
+              "d1_demanda": false,
+              "d2_capacidad": true,
+              "d3_exposicion": false
+            },
+            "admisible": false
+          }
+        ],
+        "decision": "Servicio asistido (nivel 2)",
+        "valor": 9112.673168889854,
+        "error_mc": null,
+        "decision_valor_esperado": "Servicio asistido (nivel 2)"
+      },
+      "6": {
+        "creencia": [
+          4.0,
+          10.0
+        ],
+        "media": 0.2857142857142857,
+        "ic90": [
+          0.11266578079028224,
+          0.4946497301513655
+        ],
+        "L": 29957.32273553991,
+        "epsilon": 0.05,
+        "delta": 0.25,
+        "opciones": [
+          {
+            "opcion": "Servicio asistido (nivel 2)",
+            "theta_min": 0.07733333333333334,
+            "p_theta_bajo_min": 0.014490306485824186,
+            "delta_bayes": 0.5723343325470923,
+            "van_caja_medio": 18949.924662000838,
+            "valor_economico_medio": 9564.40560947595,
+            "valor_economico_p10": -2775.173358186155,
+            "valor_economico_p90": 29976.592709647946,
+            "caja_minima_p05": -22150.031524012105,
+            "prob_exposicion": 0.03401,
+            "demanda_perdida_media": 9.793643908913989e-05,
+            "umbrales": {
+              "d1_demanda": true,
+              "d2_capacidad": true,
+              "d3_exposicion": true
+            },
+            "admisible": true
+          },
+          {
+            "opcion": "Producto automatizado (nivel 4)",
+            "theta_min": 0.32,
+            "p_theta_bajo_min": 0.6397672577861382,
+            "delta_bayes": null,
+            "van_caja_medio": -56446.49151576413,
+            "valor_economico_medio": -62493.581769366305,
+            "valor_economico_p10": -109269.51948140755,
+            "valor_economico_p90": 16852.882245584253,
+            "caja_minima_p05": -203480.1781342411,
+            "prob_exposicion": 0.53222,
+            "demanda_perdida_media": 0.0,
+            "umbrales": {
+              "d1_demanda": false,
+              "d2_capacidad": true,
+              "d3_exposicion": false
+            },
+            "admisible": false
+          }
+        ],
+        "decision": "Servicio asistido (nivel 2)",
+        "valor": 9564.40560947595,
+        "error_mc": null,
+        "decision_valor_esperado": "Servicio asistido (nivel 2)"
+      }
+    },
     "inicial_jeffreys": {
       "creencia": [
         3.5,

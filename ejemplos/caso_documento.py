@@ -21,6 +21,7 @@ from tres_dimensiones.regla import Aleatorios, valor_informacion_replicado
 
 SEMILLA = 20261027
 REPLICAS = (101, 202, 303, 404, 505)
+SEMILLAS_ESTRES = (1, 2, 3, 4, 5, 6)
 N = 100_000
 COLCHON = 60_000  # caja liquida del decisor (hipotetica)
 
@@ -102,6 +103,9 @@ def casos() -> dict:
             "delta_0.10": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, delta=0.10),
             "delta_0.50": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, delta=0.50),
             "semilla_alternativa": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, semilla=7),
+            "estres_pareto_semillas": {
+                str(s): evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, DESVIACION_ESTRES, semilla=s)
+                for s in SEMILLAS_ESTRES},
             "inicial_jeffreys": evaluar(CreenciaConversion(0.5, 0.5).actualizar(12, 3),
                                         (ASISTIDO, AUTOMATIZADO), MERCADO_A),
         },
@@ -155,6 +159,12 @@ if __name__ == "__main__":
         for nombre, r in resultados.items():
             if nombre == "sensibilidad_A":
                 for sub, rr in r.items():
-                    _imprimir(f"Sensibilidad A: {sub}", rr)
+                    if sub == "estres_pareto_semillas":
+                        vals = [x["valor"] for x in rr.values()]
+                        print(f"\n== Estres Pareto, semillas {list(rr)}: valor del asistido entre "
+                              f"{min(vals):,.0f} y {max(vals):,.0f} EUR; decisiones "
+                              f"{sorted({x['decision'] for x in rr.values()})}")
+                    else:
+                        _imprimir(f"Sensibilidad A: {sub}", rr)
             else:
                 _imprimir(nombre, r)
