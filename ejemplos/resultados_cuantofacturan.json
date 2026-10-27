@@ -1,0 +1,443 @@
+[
+  {
+    "horas": 2.0,
+    "compradores": 30,
+    "theta_min": 0.18461538461538463,
+    "p_theta_bajo_min": 0.18461538461538463,
+    "valor": 2101.4742659853746,
+    "p10": -945.4688064216041,
+    "prob_exposicion": 0.0,
+    "umbrales": {
+      "d1_demanda": true,
+      "d2_capacidad": true,
+      "d3_exposicion": true
+    },
+    "decision": "Diagnostico cuantofacturan (nivel 2)",
+    "incremento_prueba": -0.8254394470764894,
+    "error_prueba": 6.3790306136463,
+    "ramas": [
+      {
+        "k": 0,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 1,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 2,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 3,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 4,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 5,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      }
+    ]
+  },
+  {
+    "horas": 2.0,
+    "compradores": 60,
+    "theta_min": 0.09230769230769231,
+    "p_theta_bajo_min": 0.09230769230769231,
+    "valor": 5767.590238121004,
+    "p10": -193.9639237299625,
+    "prob_exposicion": 0.0,
+    "umbrales": {
+      "d1_demanda": true,
+      "d2_capacidad": true,
+      "d3_exposicion": true
+    },
+    "decision": "Diagnostico cuantofacturan (nivel 2)",
+    "incremento_prueba": -85.77514870835964,
+    "error_prueba": 10.7237673398162,
+    "ramas": [
+      {
+        "k": 0,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 1,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 2,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 3,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 4,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 5,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      }
+    ]
+  },
+  {
+    "horas": 2.0,
+    "compradores": 120,
+    "theta_min": 0.046153846153846156,
+    "p_theta_bajo_min": 0.046153846153846156,
+    "valor": 13096.79566495639,
+    "p10": 1299.5177097835908,
+    "prob_exposicion": 0.0,
+    "umbrales": {
+      "d1_demanda": true,
+      "d2_capacidad": true,
+      "d3_exposicion": true
+    },
+    "decision": "Diagnostico cuantofacturan (nivel 2)",
+    "incremento_prueba": 4.372340904909334,
+    "error_prueba": 18.816881791071573,
+    "ramas": [
+      {
+        "k": 0,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 1,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 2,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 3,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 4,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 5,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      }
+    ]
+  },
+  {
+    "horas": 4.0,
+    "compradores": 30,
+    "theta_min": 0.2823529411764706,
+    "p_theta_bajo_min": 0.2823529411764706,
+    "valor": 817.9689399345302,
+    "p10": -1162.505608919518,
+    "prob_exposicion": 0.0,
+    "umbrales": {
+      "d1_demanda": false,
+      "d2_capacidad": true,
+      "d3_exposicion": true
+    },
+    "decision": "Descartar o seguir investigando",
+    "incremento_prueba": 1000.1795509125042,
+    "error_prueba": 3.2405746198689487,
+    "ramas": [
+      {
+        "k": 0,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 1,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 2,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 3,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 4,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 5,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      }
+    ]
+  },
+  {
+    "horas": 4.0,
+    "compradores": 60,
+    "theta_min": 0.1411764705882353,
+    "p_theta_bajo_min": 0.1411764705882353,
+    "valor": 3201.3470526550213,
+    "p10": -668.285384739624,
+    "prob_exposicion": 0.0,
+    "umbrales": {
+      "d1_demanda": true,
+      "d2_capacidad": true,
+      "d3_exposicion": true
+    },
+    "decision": "Diagnostico cuantofacturan (nivel 2)",
+    "incremento_prueba": 35.60893140439195,
+    "error_prueba": 6.975539343518445,
+    "ramas": [
+      {
+        "k": 0,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 1,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 2,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 3,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 4,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 5,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      }
+    ]
+  },
+  {
+    "horas": 4.0,
+    "compradores": 120,
+    "theta_min": 0.07058823529411765,
+    "p_theta_bajo_min": 0.07058823529411765,
+    "valor": 7926.397877895666,
+    "p10": 294.76180670547984,
+    "prob_exposicion": 0.0,
+    "umbrales": {
+      "d1_demanda": true,
+      "d2_capacidad": true,
+      "d3_exposicion": true
+    },
+    "decision": "Diagnostico cuantofacturan (nivel 2)",
+    "incremento_prueba": -189.44472720440595,
+    "error_prueba": 13.728328053406672,
+    "ramas": [
+      {
+        "k": 0,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 1,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 2,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 3,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 4,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      },
+      {
+        "k": 5,
+        "prob": 0.16666666666666669,
+        "decision": "Diagnostico cuantofacturan (nivel 2)"
+      }
+    ]
+  },
+  {
+    "horas": 8.0,
+    "compradores": 30,
+    "theta_min": null,
+    "p_theta_bajo_min": 1.0,
+    "valor": -1748.929065551402,
+    "p10": -2254.202952295815,
+    "prob_exposicion": 0.0,
+    "umbrales": {
+      "d1_demanda": false,
+      "d2_capacidad": false,
+      "d3_exposicion": true
+    },
+    "decision": "Descartar o seguir investigando",
+    "incremento_prueba": 0.0,
+    "error_prueba": 0.0,
+    "ramas": [
+      {
+        "k": 0,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 1,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 2,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 3,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 4,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 5,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      }
+    ]
+  },
+  {
+    "horas": 8.0,
+    "compradores": 60,
+    "theta_min": null,
+    "p_theta_bajo_min": 1.0,
+    "valor": -1924.9057978514802,
+    "p10": -2474.814462620855,
+    "prob_exposicion": 0.0,
+    "umbrales": {
+      "d1_demanda": false,
+      "d2_capacidad": false,
+      "d3_exposicion": true
+    },
+    "decision": "Descartar o seguir investigando",
+    "incremento_prueba": 0.0,
+    "error_prueba": 0.0,
+    "ramas": [
+      {
+        "k": 0,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 1,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 2,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 3,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 4,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 5,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      }
+    ]
+  },
+  {
+    "horas": 8.0,
+    "compradores": 120,
+    "theta_min": null,
+    "p_theta_bajo_min": 1.0,
+    "valor": -2184.653647874836,
+    "p10": -2784.6483527545847,
+    "prob_exposicion": 0.0,
+    "umbrales": {
+      "d1_demanda": false,
+      "d2_capacidad": false,
+      "d3_exposicion": true
+    },
+    "decision": "Descartar o seguir investigando",
+    "incremento_prueba": 0.0,
+    "error_prueba": 0.0,
+    "ramas": [
+      {
+        "k": 0,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 1,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 2,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 3,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 4,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      },
+      {
+        "k": 5,
+        "prob": 0.16666666666666669,
+        "decision": "Descartar o seguir investigando"
+      }
+    ]
+  }
+]

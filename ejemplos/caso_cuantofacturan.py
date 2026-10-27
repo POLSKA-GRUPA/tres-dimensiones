@@ -16,6 +16,7 @@ fijo mensual. No se presentan como observados.
 from __future__ import annotations
 
 import json
+import math
 import sys
 
 from tres_dimensiones import (CreenciaConversion, Mercado, OpcionEntrega, Umbrales, decidir,
@@ -49,7 +50,8 @@ def caso(horas: float, compradores: int) -> dict:
     vi = valor_informacion(creencia, PRUEBA[0], PRUEBA[1], (op,), mercado, u, alea)
     e = dec.evaluaciones[0]
     return {
-        "horas": horas, "compradores": compradores, "theta_min": e.theta_min,
+        "horas": horas, "compradores": compradores,
+        "theta_min": e.theta_min if math.isfinite(e.theta_min) else None,  # None: margen unitario no positivo
         "p_theta_bajo_min": e.prob_theta_bajo_min, "valor": e.resumen["valor_economico_medio"],
         "p10": e.resumen["valor_economico_p10"], "prob_exposicion": e.resumen["prob_exposicion"],
         "umbrales": e.umbrales, "decision": dec.elegida,
