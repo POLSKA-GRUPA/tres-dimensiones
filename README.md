@@ -74,4 +74,6 @@ Python implementation of a conjunctive, three-dimensional decision rule for smal
 
 ## Cita
 
+Software: Martín Alcantara, K. (2026). *tres-dimensiones* (versión 0.1.0) [Software]. Zenodo. https://doi.org/10.5281/zenodo.23703954
+
 Cita el software (véase `CITATION.cff`) y el documento de trabajo que lo describe (DOI 10.5281/zenodo.23687822). Licencia Apache-2.0. © 2026 Kenyi Martín Alcantara.
