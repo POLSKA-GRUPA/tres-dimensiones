@@ -14,8 +14,8 @@ import sys
 
 from tres_dimensiones import (CreenciaConversion, Mercado, OpcionEntrega, Umbrales, decidir,
                               perdida_asumible, tolerancia_riesgo_propietario, valor_informacion)
-from tres_dimensiones.calibracion import (DESVIACION_ALTA, DESVIACION_BAJA, DESVIACION_CENTRAL,
-                                          DESVIACION_ESTRES, EPSILON)
+from tres_dimensiones.calibracion import (DELTA, DESVIACION_ALTA, DESVIACION_BAJA,
+                                          DESVIACION_CENTRAL, DESVIACION_ESTRES, EPSILON)
 from tres_dimensiones.regla import Aleatorios
 
 SEMILLA = 20261027
@@ -39,27 +39,32 @@ MERCADO_A = Mercado(precio=900, compradores_horizonte=150)
 MERCADO_BC = Mercado(precio=900, compradores_horizonte=200)
 
 
-def umbrales(epsilon: float = EPSILON) -> Umbrales:
-    return Umbrales(epsilon=epsilon,
-                    perdida=perdida_asumible(tolerancia_riesgo_propietario(COLCHON), epsilon))
+def umbrales(epsilon: float = EPSILON, delta: float = DELTA) -> Umbrales:
+    r = tolerancia_riesgo_propietario(COLCHON)
+    return Umbrales(delta=delta, epsilon=epsilon,
+                    perdida=perdida_asumible(r, epsilon, capacidad_financiera=COLCHON))
 
 
 def evaluar(creencia, opciones, mercado, desviacion=DESVIACION_CENTRAL, epsilon=EPSILON,
-            prueba: tuple[int, float] | None = None) -> dict:
-    alea = Aleatorios.generar(SEMILLA, N, mercado.meses, desviacion)
-    u = umbrales(epsilon)
+            delta=DELTA, prueba: tuple[int, float] | None = None, semilla: int = SEMILLA) -> dict:
+    alea = Aleatorios.generar(semilla, N, mercado.meses, desviacion)
+    u = umbrales(epsilon, delta)
     dec = decidir(creencia, opciones, mercado, u, alea)
     out = {
         "creencia": [creencia.alpha, creencia.beta], "media": creencia.media,
-        "ic90": creencia.intervalo(0.90), "L": u.perdida, "epsilon": u.epsilon,
+        "ic90": creencia.intervalo(0.90), "L": u.perdida, "epsilon": u.epsilon, "delta": u.delta,
         "opciones": [{"opcion": e.opcion, "theta_min": e.theta_min,
-                      "p_theta_bajo_min": e.prob_theta_bajo_min, **e.resumen,
-                      "umbrales": e.umbrales, "admisible": e.admisible} for e in dec.evaluaciones],
-        "decision": dec.elegida, "valor": dec.valor,
+                      "p_theta_bajo_min": e.prob_theta_bajo_min, "delta_bayes": e.delta_bayes,
+                      **e.resumen, "umbrales": e.umbrales, "admisible": e.admisible}
+                     for e in dec.evaluaciones],
+        "decision": dec.elegida, "valor": dec.valor, "error_mc": dec.error_mc,
+        "decision_valor_esperado": dec.elegida_valor_esperado,
     }
     if prueba:
         vi = valor_informacion(creencia, prueba[0], prueba[1], opciones, mercado, u, alea)
-        out["prueba"] = {"ofertas": vi.ofertas, "coste": vi.coste, "evsi_bruto": vi.evsi_bruto,
+        out["prueba"] = {"ofertas": vi.ofertas, "coste": vi.coste,
+                         "incremento_politica": vi.incremento_politica,
+                         "evsi_clasico": vi.evsi_clasico, "error_mc": vi.error_mc,
                          "realizar": vi.realizar,
                          "ramas": [{"k": r.compras, "prob": r.probabilidad, "decision": r.decision,
                                     "valor": r.valor} for r in vi.ramas]}
@@ -82,6 +87,9 @@ def casos() -> dict:
             "estres_pareto": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, DESVIACION_ESTRES),
             "epsilon_0.01": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, epsilon=0.01),
             "epsilon_0.10": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, epsilon=0.10),
+            "delta_0.10": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, delta=0.10),
+            "delta_0.50": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, delta=0.50),
+            "semilla_alternativa": evaluar(a, (ASISTIDO, AUTOMATIZADO), MERCADO_A, semilla=7),
             "inicial_jeffreys": evaluar(CreenciaConversion(0.5, 0.5).actualizar(12, 3),
                                         (ASISTIDO, AUTOMATIZADO), MERCADO_A),
         },
@@ -94,15 +102,17 @@ def _imprimir(nombre: str, r: dict) -> None:
           f"IC90 {lo:.3f}-{hi:.3f} | L {r['L']:,.0f} EUR | epsilon {r['epsilon']}")
     for o in r["opciones"]:
         print(f"  {o['opcion']}: theta_min {o['theta_min']:.3f}, Pr(theta<min) {o['p_theta_bajo_min']:.3f}, "
-              f"delta {o['delta']:.3f}, valor econ. {o['valor_economico_medio']:,.0f} "
+              f"delta bayes {o['delta_bayes']:.3f}, valor econ. {o['valor_economico_medio']:,.0f} "
               f"(P10 {o['valor_economico_p10']:,.0f}; P90 {o['valor_economico_p90']:,.0f}), "
               f"Pr(exposicion) {o['prob_exposicion']:.3f}, {o['umbrales']}")
-    print(f"  DECISION: {r['decision']} ({r['valor']:,.0f} EUR)")
+    print(f"  DECISION: {r['decision']} ({r['valor']:,.0f} EUR, error MC {r['error_mc']:,.0f}); "
+          f"criterio de valor esperado sin restricciones: {r['decision_valor_esperado']}")
     if "prueba" in r:
         p = r["prueba"]
         for rama in p["ramas"]:
             print(f"    k={rama['k']} p={rama['prob']:.3f} -> {rama['decision']} ({rama['valor']:,.0f})")
-        print(f"  EVSI bruto {p['evsi_bruto']:,.0f} frente a coste {p['coste']:,.0f}: realizar {p['realizar']}")
+        print(f"  Incremento de la politica {p['incremento_politica']:,.0f} (EVSI clasico {p['evsi_clasico']:,.0f}; "
+              f"error MC {p['error_mc']:,.0f}) frente a coste {p['coste']:,.0f}: realizar {p['realizar']}")
 
 
 if __name__ == "__main__":

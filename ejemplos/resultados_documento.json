@@ -11,19 +11,20 @@
     ],
     "L": 29957.32273553991,
     "epsilon": 0.05,
+    "delta": 0.25,
     "opciones": [
       {
         "opcion": "Servicio asistido (nivel 2)",
         "theta_min": 0.07733333333333334,
         "p_theta_bajo_min": 0.014490306485824186,
-        "van_caja_medio": 24233.279246234484,
-        "valor_economico_medio": 14865.562259205977,
-        "valor_economico_p10": 475.06405279057486,
-        "valor_economico_p90": 30508.698650388524,
-        "caja_minima_p05": -11675.180752797225,
-        "prob_exposicion": 0.0017,
-        "demanda_perdida_media": 8.112643550631048e-05,
-        "delta": 0.7660167431490817,
+        "delta_bayes": 0.7744142642897524,
+        "van_caja_medio": 23995.017841091758,
+        "valor_economico_medio": 14624.823423163698,
+        "valor_economico_p10": 438.5473473814656,
+        "valor_economico_p90": 30017.49249720318,
+        "caja_minima_p05": -12667.904064120534,
+        "prob_exposicion": 0.00178,
+        "demanda_perdida_media": 9.317548607234291e-05,
         "umbrales": {
           "d1_demanda": true,
           "d2_capacidad": true,
@@ -35,14 +36,14 @@
         "opcion": "Producto automatizado (nivel 4)",
         "theta_min": 0.32,
         "p_theta_bajo_min": 0.6397672577861382,
-        "van_caja_medio": -19361.100528935127,
-        "valor_economico_medio": -25405.932782601903,
-        "valor_economico_p10": -77326.69384245083,
-        "valor_economico_p90": 17130.81691331837,
-        "caja_minima_p05": -103244.46933403987,
-        "prob_exposicion": 0.50702,
+        "delta_bayes": NaN,
+        "van_caja_medio": -19343.438345418028,
+        "valor_economico_medio": -25388.605385192393,
+        "valor_economico_p10": -76770.3570006089,
+        "valor_economico_p90": 16641.60839136987,
+        "caja_minima_p05": -105092.96702491125,
+        "prob_exposicion": 0.53116,
         "demanda_perdida_media": 0.0,
-        "delta": 0.20852994575666378,
         "umbrales": {
           "d1_demanda": false,
           "d2_capacidad": true,
@@ -52,48 +53,52 @@
       }
     ],
     "decision": "Servicio asistido (nivel 2)",
-    "valor": 14865.562259205977,
+    "valor": 14624.823423163698,
+    "error_mc": 37.705556738602965,
+    "decision_valor_esperado": "Servicio asistido (nivel 2)",
     "prueba": {
       "ofertas": 5,
       "coste": 400,
-      "evsi_bruto": 7.848451105299318,
+      "incremento_politica": 6.0356172038864315,
+      "evsi_clasico": 6.0356172038864315,
+      "error_mc": 41.34443209404846,
       "realizar": false,
       "ramas": [
         {
           "k": 0,
           "prob": 0.2336601307189544,
           "decision": "Servicio asistido (nivel 2)",
-          "valor": 8449.078379613846
+          "valor": 8282.385047790565
         },
         {
           "k": 1,
           "prob": 0.33380018674136375,
           "decision": "Servicio asistido (nivel 2)",
-          "valor": 12948.357145518794
+          "valor": 12729.333734239575
         },
         {
           "k": 2,
           "prob": 0.2567693744164331,
           "decision": "Servicio asistido (nivel 2)",
-          "valor": 17446.292626077546
+          "valor": 17170.296991097064
         },
         {
           "k": 3,
           "prob": 0.12838468720821655,
           "decision": "Servicio asistido (nivel 2)",
-          "valor": 21934.87942175654
+          "valor": 21613.209761738253
         },
         {
           "k": 4,
           "prob": 0.04084967320261435,
           "decision": "Servicio asistido (nivel 2)",
-          "valor": 26422.50004921584
+          "valor": 26043.166509710132
         },
         {
           "k": 5,
           "prob": 0.006535947712418296,
           "decision": "Servicio asistido (nivel 2)",
-          "valor": 30891.793843713847
+          "valor": 30458.54492041711
         }
       ]
     }
@@ -110,33 +115,38 @@
     ],
     "L": 29957.32273553991,
     "epsilon": 0.05,
+    "delta": 0.25,
     "opciones": [
       {
         "opcion": "Producto ligero (nivel 4)",
         "theta_min": 0.09026865671641791,
         "p_theta_bajo_min": 0.4331359083890372,
-        "van_caja_medio": 6503.174559251156,
-        "valor_economico_medio": 1790.8115617349556,
-        "valor_economico_p10": -23087.093017683117,
-        "valor_economico_p90": 32826.59042838434,
-        "caja_minima_p05": -29462.485163910307,
-        "prob_exposicion": 0.0479,
+        "delta_bayes": 0.4940920159365691,
+        "van_caja_medio": 6415.554848687146,
+        "valor_economico_medio": 1702.8200196249447,
+        "valor_economico_p10": -22886.892903544525,
+        "valor_economico_p90": 32507.229585893896,
+        "caja_minima_p05": -30324.28949999328,
+        "prob_exposicion": 0.05147,
         "demanda_perdida_media": 0.0,
-        "delta": 0.5398813973854755,
         "umbrales": {
-          "d1_demanda": true,
+          "d1_demanda": false,
           "d2_capacidad": true,
-          "d3_exposicion": true
+          "d3_exposicion": false
         },
-        "admisible": true
+        "admisible": false
       }
     ],
-    "decision": "Producto ligero (nivel 4)",
-    "valor": 1790.8115617349556,
+    "decision": "Descartar o seguir investigando",
+    "valor": 0.0,
+    "error_mc": 0.0,
+    "decision_valor_esperado": "Producto ligero (nivel 4)",
     "prueba": {
       "ofertas": 5,
       "coste": 500,
-      "evsi_bruto": 4200.387251119493,
+      "incremento_politica": 4411.359506716337,
+      "evsi_clasico": 4203.855640952218,
+      "error_mc": 9.748354068164526,
       "realizar": true,
       "ramas": [
         {
@@ -148,32 +158,32 @@
         {
           "k": 1,
           "prob": 0.2727272727272729,
-          "decision": "Producto ligero (nivel 4)",
-          "valor": 5605.01886208824
+          "decision": "Descartar o seguir investigando",
+          "valor": 0.0
         },
         {
           "k": 2,
           "prob": 0.12121212121212117,
           "decision": "Producto ligero (nivel 4)",
-          "valor": 18860.380563273648
+          "valor": 18628.162193003176
         },
         {
           "k": 3,
           "prob": 0.04545454545454546,
           "decision": "Producto ligero (nivel 4)",
-          "valor": 32122.962014499488
+          "valor": 31774.781218852033
         },
         {
           "k": 4,
           "prob": 0.012987012987012983,
           "decision": "Producto ligero (nivel 4)",
-          "valor": 45382.124110429984
+          "valor": 44921.2619059387
         },
         {
           "k": 5,
           "prob": 0.002164502164502165,
           "decision": "Producto ligero (nivel 4)",
-          "valor": 58645.216405243664
+          "valor": 58073.03226324562
         }
       ]
     }
@@ -190,19 +200,20 @@
     ],
     "L": 29957.32273553991,
     "epsilon": 0.05,
+    "delta": 0.25,
     "opciones": [
       {
         "opcion": "Producto intermedio (nivel 4)",
         "theta_min": 0.10817910447761193,
         "p_theta_bajo_min": 0.03168667153126935,
-        "van_caja_medio": 39683.840289698885,
-        "valor_economico_medio": 33978.93584030354,
-        "valor_economico_p10": -3640.599134924938,
-        "valor_economico_p90": 74207.2615164108,
-        "caja_minima_p05": -35053.16333950955,
-        "prob_exposicion": 0.07884,
+        "delta_bayes": 0.7243339910619166,
+        "van_caja_medio": 39307.133169314155,
+        "valor_economico_medio": 33601.8775665972,
+        "valor_economico_p10": -3708.914000716308,
+        "valor_economico_p90": 73349.37049674161,
+        "caja_minima_p05": -36671.92982812299,
+        "prob_exposicion": 0.08911,
         "demanda_perdida_media": 0.0,
-        "delta": 0.7293437246528269,
         "umbrales": {
           "d1_demanda": true,
           "d2_capacidad": true,
@@ -212,7 +223,9 @@
       }
     ],
     "decision": "Descartar o seguir investigando",
-    "valor": 0.0
+    "valor": 0.0,
+    "error_mc": 0.0,
+    "decision_valor_esperado": "Producto intermedio (nivel 4)"
   },
   "C_producto_intermedio_coste_acotado": {
     "creencia": [
@@ -226,19 +239,20 @@
     ],
     "L": 29957.32273553991,
     "epsilon": 0.05,
+    "delta": 0.25,
     "opciones": [
       {
         "opcion": "Producto intermedio (nivel 4)",
         "theta_min": 0.10817910447761193,
         "p_theta_bajo_min": 0.03168667153126935,
-        "van_caja_medio": 45443.12577829446,
-        "valor_economico_medio": 39738.221328899104,
-        "valor_economico_p10": 4724.75019626886,
-        "valor_economico_p90": 77372.04520175596,
-        "caja_minima_p05": -22082.786036295613,
-        "prob_exposicion": 0.01401,
+        "delta_bayes": 0.8444718680427723,
+        "van_caja_medio": 45002.48106310085,
+        "valor_economico_medio": 39297.225460383896,
+        "valor_economico_p10": 4636.384834117132,
+        "valor_economico_p90": 76690.22264224444,
+        "caja_minima_p05": -23237.586498902685,
+        "prob_exposicion": 0.01661,
         "demanda_perdida_media": 0.0,
-        "delta": 0.8357457497229405,
         "umbrales": {
           "d1_demanda": true,
           "d2_capacidad": true,
@@ -248,7 +262,9 @@
       }
     ],
     "decision": "Producto intermedio (nivel 4)",
-    "valor": 39738.221328899104
+    "valor": 39297.225460383896,
+    "error_mc": 87.98397122271005,
+    "decision_valor_esperado": "Producto intermedio (nivel 4)"
   },
   "sensibilidad_A": {
     "desviacion_baja": {
@@ -263,19 +279,20 @@
       ],
       "L": 29957.32273553991,
       "epsilon": 0.05,
+      "delta": 0.25,
       "opciones": [
         {
           "opcion": "Servicio asistido (nivel 2)",
           "theta_min": 0.07733333333333334,
           "p_theta_bajo_min": 0.014490306485824186,
-          "van_caja_medio": 26233.741320711837,
-          "valor_economico_medio": 16866.024333683337,
-          "valor_economico_p10": 3358.8588521133784,
-          "valor_economico_p90": 31654.753576559586,
-          "caja_minima_p05": -7373.371780055964,
-          "prob_exposicion": 4e-05,
-          "demanda_perdida_media": 8.112643550631048e-05,
-          "delta": 0.8584792901056165,
+          "delta_bayes": 0.8768121736122764,
+          "van_caja_medio": 25973.271477768674,
+          "valor_economico_medio": 16603.077059840612,
+          "valor_economico_p10": 3302.735298992244,
+          "valor_economico_p90": 31250.734609785803,
+          "caja_minima_p05": -8181.621859214013,
+          "prob_exposicion": 0.0,
+          "demanda_perdida_media": 9.317548607234291e-05,
           "umbrales": {
             "d1_demanda": true,
             "d2_capacidad": true,
@@ -287,14 +304,14 @@
           "opcion": "Producto automatizado (nivel 4)",
           "theta_min": 0.32,
           "p_theta_bajo_min": 0.6397672577861382,
-          "van_caja_medio": -4810.0083421352865,
-          "valor_economico_medio": -10854.840595802063,
-          "valor_economico_p10": -44668.148131182315,
-          "valor_economico_p90": 20117.005248200483,
-          "caja_minima_p05": -61345.08998905396,
-          "prob_exposicion": 0.3489,
+          "delta_bayes": 0.16722802205338583,
+          "van_caja_medio": -4953.887349467024,
+          "valor_economico_medio": -10999.054389241388,
+          "valor_economico_p10": -44503.687780612214,
+          "valor_economico_p90": 19558.3954752829,
+          "caja_minima_p05": -63200.444007949816,
+          "prob_exposicion": 0.37656,
           "demanda_perdida_media": 0.0,
-          "delta": 0.36399693103360653,
           "umbrales": {
             "d1_demanda": false,
             "d2_capacidad": true,
@@ -304,7 +321,9 @@
         }
       ],
       "decision": "Servicio asistido (nivel 2)",
-      "valor": 16866.024333683337
+      "valor": 16603.077059840612,
+      "error_mc": 34.62437793297624,
+      "decision_valor_esperado": "Servicio asistido (nivel 2)"
     },
     "desviacion_alta": {
       "creencia": [
@@ -318,19 +337,20 @@
       ],
       "L": 29957.32273553991,
       "epsilon": 0.05,
+      "delta": 0.25,
       "opciones": [
         {
           "opcion": "Servicio asistido (nivel 2)",
           "theta_min": 0.07733333333333334,
           "p_theta_bajo_min": 0.014490306485824186,
-          "van_caja_medio": 20618.091108669643,
-          "valor_economico_medio": 11250.374121641145,
-          "valor_economico_p10": -6149.824210115741,
-          "valor_economico_p90": 29464.827775631304,
-          "caja_minima_p05": -21572.222332818237,
-          "prob_exposicion": 0.02368,
-          "demanda_perdida_media": 8.112643550631048e-05,
-          "delta": 0.6205002764683564,
+          "delta_bayes": 0.5918203472662907,
+          "van_caja_medio": 20463.847384205805,
+          "valor_economico_medio": 11093.652966277743,
+          "valor_economico_p10": -6212.949280967996,
+          "valor_economico_p90": 28954.11494256199,
+          "caja_minima_p05": -22973.964443198514,
+          "prob_exposicion": 0.02697,
+          "demanda_perdida_media": 9.317548607234291e-05,
           "umbrales": {
             "d1_demanda": true,
             "d2_capacidad": true,
@@ -342,14 +362,14 @@
           "opcion": "Producto automatizado (nivel 4)",
           "theta_min": 0.32,
           "p_theta_bajo_min": 0.6397672577861382,
-          "van_caja_medio": -45657.49301419372,
-          "valor_economico_medio": -51702.325267860506,
-          "valor_economico_p10": -145239.8552265012,
-          "valor_economico_p90": 17697.366265197536,
-          "caja_minima_p05": -211098.96876643933,
-          "prob_exposicion": 0.58098,
+          "delta_bayes": NaN,
+          "van_caja_medio": -45028.69751679016,
+          "valor_economico_medio": -51073.86455656452,
+          "valor_economico_p10": -143647.67483920706,
+          "valor_economico_p90": 17043.07922671957,
+          "caja_minima_p05": -212493.89708373218,
+          "prob_exposicion": 0.59989,
           "demanda_perdida_media": 0.0,
-          "delta": 0.12451784276550167,
           "umbrales": {
             "d1_demanda": false,
             "d2_capacidad": true,
@@ -359,7 +379,9 @@
         }
       ],
       "decision": "Servicio asistido (nivel 2)",
-      "valor": 11250.374121641145
+      "valor": 11093.652966277743,
+      "error_mc": 52.507021797849234,
+      "decision_valor_esperado": "Servicio asistido (nivel 2)"
     },
     "estres_pareto": {
       "creencia": [
@@ -373,19 +395,20 @@
       ],
       "L": 29957.32273553991,
       "epsilon": 0.05,
+      "delta": 0.25,
       "opciones": [
         {
           "opcion": "Servicio asistido (nivel 2)",
           "theta_min": 0.07733333333333334,
           "p_theta_bajo_min": 0.014490306485824186,
-          "van_caja_medio": 23875.152941851797,
-          "valor_economico_medio": 14505.523274436462,
-          "valor_economico_p10": 275.61120583297435,
-          "valor_economico_p90": 30569.8608763913,
-          "caja_minima_p05": -12146.70441014922,
-          "prob_exposicion": 0.00654,
-          "demanda_perdida_media": 9.793110361996513e-05,
-          "delta": 0.7540211511470809,
+          "delta_bayes": 0.4863176411313727,
+          "van_caja_medio": 18095.375970506153,
+          "valor_economico_medio": 8725.181552578095,
+          "valor_economico_p10": -2531.513594437841,
+          "valor_economico_p90": 29839.214605430778,
+          "caja_minima_p05": -21737.324092804283,
+          "prob_exposicion": 0.03297,
+          "demanda_perdida_media": 9.317548607234291e-05,
           "umbrales": {
             "d1_demanda": true,
             "d2_capacidad": true,
@@ -397,14 +420,14 @@
           "opcion": "Producto automatizado (nivel 4)",
           "theta_min": 0.32,
           "p_theta_bajo_min": 0.6397672577861382,
-          "van_caja_medio": -22015.833793611313,
-          "valor_economico_medio": -28060.94120588418,
-          "valor_economico_p10": -76084.50475453709,
-          "valor_economico_p90": 17178.519045679568,
-          "caja_minima_p05": -108357.14832372783,
-          "prob_exposicion": 0.50716,
+          "delta_bayes": NaN,
+          "van_caja_medio": -62256.64016176523,
+          "valor_economico_medio": -68301.80720153959,
+          "valor_economico_p10": -108838.0607475562,
+          "valor_economico_p90": 16640.989397471363,
+          "caja_minima_p05": -198694.9560678743,
+          "prob_exposicion": 0.53116,
           "demanda_perdida_media": 0.0,
-          "delta": 0.19739557380896794,
           "umbrales": {
             "d1_demanda": false,
             "d2_capacidad": true,
@@ -414,7 +437,9 @@
         }
       ],
       "decision": "Servicio asistido (nivel 2)",
-      "valor": 14505.523274436462
+      "valor": 8725.181552578095,
+      "error_mc": 372.6928983783959,
+      "decision_valor_esperado": "Servicio asistido (nivel 2)"
     },
     "epsilon_0.01": {
       "creencia": [
@@ -428,19 +453,20 @@
       ],
       "L": 46051.701859880915,
       "epsilon": 0.01,
+      "delta": 0.25,
       "opciones": [
         {
           "opcion": "Servicio asistido (nivel 2)",
           "theta_min": 0.07733333333333334,
           "p_theta_bajo_min": 0.014490306485824186,
-          "van_caja_medio": 24233.279246234484,
-          "valor_economico_medio": 14865.562259205977,
-          "valor_economico_p10": 475.06405279057486,
-          "valor_economico_p90": 30508.698650388524,
-          "caja_minima_p05": -11675.180752797225,
-          "prob_exposicion": 0.00035,
-          "demanda_perdida_media": 8.112643550631048e-05,
-          "delta": 0.7660167431490817,
+          "delta_bayes": 0.7744142642897524,
+          "van_caja_medio": 23995.017841091758,
+          "valor_economico_medio": 14624.823423163698,
+          "valor_economico_p10": 438.5473473814656,
+          "valor_economico_p90": 30017.49249720318,
+          "caja_minima_p05": -12667.904064120534,
+          "prob_exposicion": 0.00024,
+          "demanda_perdida_media": 9.317548607234291e-05,
           "umbrales": {
             "d1_demanda": true,
             "d2_capacidad": true,
@@ -452,14 +478,14 @@
           "opcion": "Producto automatizado (nivel 4)",
           "theta_min": 0.32,
           "p_theta_bajo_min": 0.6397672577861382,
-          "van_caja_medio": -19361.100528935127,
-          "valor_economico_medio": -25405.932782601903,
-          "valor_economico_p10": -77326.69384245083,
-          "valor_economico_p90": 17130.81691331837,
-          "caja_minima_p05": -103244.46933403987,
-          "prob_exposicion": 0.27764,
+          "delta_bayes": NaN,
+          "van_caja_medio": -19343.438345418028,
+          "valor_economico_medio": -25388.605385192393,
+          "valor_economico_p10": -76770.3570006089,
+          "valor_economico_p90": 16641.60839136987,
+          "caja_minima_p05": -105092.96702491125,
+          "prob_exposicion": 0.29403,
           "demanda_perdida_media": 0.0,
-          "delta": 0.20852994575666378,
           "umbrales": {
             "d1_demanda": false,
             "d2_capacidad": true,
@@ -469,7 +495,9 @@
         }
       ],
       "decision": "Servicio asistido (nivel 2)",
-      "valor": 14865.562259205977
+      "valor": 14624.823423163698,
+      "error_mc": 37.705556738602965,
+      "decision_valor_esperado": "Servicio asistido (nivel 2)"
     },
     "epsilon_0.10": {
       "creencia": [
@@ -483,19 +511,20 @@
       ],
       "L": 23025.850929940458,
       "epsilon": 0.1,
+      "delta": 0.25,
       "opciones": [
         {
           "opcion": "Servicio asistido (nivel 2)",
           "theta_min": 0.07733333333333334,
           "p_theta_bajo_min": 0.014490306485824186,
-          "van_caja_medio": 24233.279246234484,
-          "valor_economico_medio": 14865.562259205977,
-          "valor_economico_p10": 475.06405279057486,
-          "valor_economico_p90": 30508.698650388524,
-          "caja_minima_p05": -11675.180752797225,
-          "prob_exposicion": 0.00473,
-          "demanda_perdida_media": 8.112643550631048e-05,
-          "delta": 0.7660167431490817,
+          "delta_bayes": 0.7744142642897524,
+          "van_caja_medio": 23995.017841091758,
+          "valor_economico_medio": 14624.823423163698,
+          "valor_economico_p10": 438.5473473814656,
+          "valor_economico_p90": 30017.49249720318,
+          "caja_minima_p05": -12667.904064120534,
+          "prob_exposicion": 0.00551,
+          "demanda_perdida_media": 9.317548607234291e-05,
           "umbrales": {
             "d1_demanda": true,
             "d2_capacidad": true,
@@ -507,14 +536,14 @@
           "opcion": "Producto automatizado (nivel 4)",
           "theta_min": 0.32,
           "p_theta_bajo_min": 0.6397672577861382,
-          "van_caja_medio": -19361.100528935127,
-          "valor_economico_medio": -25405.932782601903,
-          "valor_economico_p10": -77326.69384245083,
-          "valor_economico_p90": 17130.81691331837,
-          "caja_minima_p05": -103244.46933403987,
-          "prob_exposicion": 0.65215,
+          "delta_bayes": NaN,
+          "van_caja_medio": -19343.438345418028,
+          "valor_economico_medio": -25388.605385192393,
+          "valor_economico_p10": -76770.3570006089,
+          "valor_economico_p90": 16641.60839136987,
+          "caja_minima_p05": -105092.96702491125,
+          "prob_exposicion": 0.67772,
           "demanda_perdida_media": 0.0,
-          "delta": 0.20852994575666378,
           "umbrales": {
             "d1_demanda": false,
             "d2_capacidad": true,
@@ -524,7 +553,183 @@
         }
       ],
       "decision": "Servicio asistido (nivel 2)",
-      "valor": 14865.562259205977
+      "valor": 14624.823423163698,
+      "error_mc": 37.705556738602965,
+      "decision_valor_esperado": "Servicio asistido (nivel 2)"
+    },
+    "delta_0.10": {
+      "creencia": [
+        4.0,
+        10.0
+      ],
+      "media": 0.2857142857142857,
+      "ic90": [
+        0.11266578079028224,
+        0.4946497301513655
+      ],
+      "L": 29957.32273553991,
+      "epsilon": 0.05,
+      "delta": 0.1,
+      "opciones": [
+        {
+          "opcion": "Servicio asistido (nivel 2)",
+          "theta_min": 0.07733333333333334,
+          "p_theta_bajo_min": 0.014490306485824186,
+          "delta_bayes": 0.7744142642897524,
+          "van_caja_medio": 23995.017841091758,
+          "valor_economico_medio": 14624.823423163698,
+          "valor_economico_p10": 438.5473473814656,
+          "valor_economico_p90": 30017.49249720318,
+          "caja_minima_p05": -12667.904064120534,
+          "prob_exposicion": 0.00178,
+          "demanda_perdida_media": 9.317548607234291e-05,
+          "umbrales": {
+            "d1_demanda": true,
+            "d2_capacidad": true,
+            "d3_exposicion": true
+          },
+          "admisible": true
+        },
+        {
+          "opcion": "Producto automatizado (nivel 4)",
+          "theta_min": 0.32,
+          "p_theta_bajo_min": 0.6397672577861382,
+          "delta_bayes": NaN,
+          "van_caja_medio": -19343.438345418028,
+          "valor_economico_medio": -25388.605385192393,
+          "valor_economico_p10": -76770.3570006089,
+          "valor_economico_p90": 16641.60839136987,
+          "caja_minima_p05": -105092.96702491125,
+          "prob_exposicion": 0.53116,
+          "demanda_perdida_media": 0.0,
+          "umbrales": {
+            "d1_demanda": false,
+            "d2_capacidad": true,
+            "d3_exposicion": false
+          },
+          "admisible": false
+        }
+      ],
+      "decision": "Servicio asistido (nivel 2)",
+      "valor": 14624.823423163698,
+      "error_mc": 37.705556738602965,
+      "decision_valor_esperado": "Servicio asistido (nivel 2)"
+    },
+    "delta_0.50": {
+      "creencia": [
+        4.0,
+        10.0
+      ],
+      "media": 0.2857142857142857,
+      "ic90": [
+        0.11266578079028224,
+        0.4946497301513655
+      ],
+      "L": 29957.32273553991,
+      "epsilon": 0.05,
+      "delta": 0.5,
+      "opciones": [
+        {
+          "opcion": "Servicio asistido (nivel 2)",
+          "theta_min": 0.07733333333333334,
+          "p_theta_bajo_min": 0.014490306485824186,
+          "delta_bayes": 0.7744142642897524,
+          "van_caja_medio": 23995.017841091758,
+          "valor_economico_medio": 14624.823423163698,
+          "valor_economico_p10": 438.5473473814656,
+          "valor_economico_p90": 30017.49249720318,
+          "caja_minima_p05": -12667.904064120534,
+          "prob_exposicion": 0.00178,
+          "demanda_perdida_media": 9.317548607234291e-05,
+          "umbrales": {
+            "d1_demanda": true,
+            "d2_capacidad": true,
+            "d3_exposicion": true
+          },
+          "admisible": true
+        },
+        {
+          "opcion": "Producto automatizado (nivel 4)",
+          "theta_min": 0.32,
+          "p_theta_bajo_min": 0.6397672577861382,
+          "delta_bayes": NaN,
+          "van_caja_medio": -19343.438345418028,
+          "valor_economico_medio": -25388.605385192393,
+          "valor_economico_p10": -76770.3570006089,
+          "valor_economico_p90": 16641.60839136987,
+          "caja_minima_p05": -105092.96702491125,
+          "prob_exposicion": 0.53116,
+          "demanda_perdida_media": 0.0,
+          "umbrales": {
+            "d1_demanda": false,
+            "d2_capacidad": true,
+            "d3_exposicion": false
+          },
+          "admisible": false
+        }
+      ],
+      "decision": "Servicio asistido (nivel 2)",
+      "valor": 14624.823423163698,
+      "error_mc": 37.705556738602965,
+      "decision_valor_esperado": "Servicio asistido (nivel 2)"
+    },
+    "semilla_alternativa": {
+      "creencia": [
+        4.0,
+        10.0
+      ],
+      "media": 0.2857142857142857,
+      "ic90": [
+        0.11266578079028224,
+        0.4946497301513655
+      ],
+      "L": 29957.32273553991,
+      "epsilon": 0.05,
+      "delta": 0.25,
+      "opciones": [
+        {
+          "opcion": "Servicio asistido (nivel 2)",
+          "theta_min": 0.07733333333333334,
+          "p_theta_bajo_min": 0.014490306485824186,
+          "delta_bayes": 0.7685018754865186,
+          "van_caja_medio": 24022.04358780484,
+          "valor_economico_medio": 14644.050984546455,
+          "valor_economico_p10": 408.61207523655963,
+          "valor_economico_p90": 30206.41186351226,
+          "caja_minima_p05": -12680.22752142717,
+          "prob_exposicion": 0.00181,
+          "demanda_perdida_media": 9.439878498483001e-05,
+          "umbrales": {
+            "d1_demanda": true,
+            "d2_capacidad": true,
+            "d3_exposicion": true
+          },
+          "admisible": true
+        },
+        {
+          "opcion": "Producto automatizado (nivel 4)",
+          "theta_min": 0.32,
+          "p_theta_bajo_min": 0.6397672577861382,
+          "delta_bayes": NaN,
+          "van_caja_medio": -19353.43560837525,
+          "valor_economico_medio": -25399.57814196145,
+          "valor_economico_p10": -77143.47575924688,
+          "valor_economico_p90": 16835.319127755418,
+          "caja_minima_p05": -105595.22761038356,
+          "prob_exposicion": 0.53016,
+          "demanda_perdida_media": 0.0,
+          "umbrales": {
+            "d1_demanda": false,
+            "d2_capacidad": true,
+            "d3_exposicion": false
+          },
+          "admisible": false
+        }
+      ],
+      "decision": "Servicio asistido (nivel 2)",
+      "valor": 14644.050984546455,
+      "error_mc": 37.964321073931465,
+      "decision_valor_esperado": "Servicio asistido (nivel 2)"
     },
     "inicial_jeffreys": {
       "creencia": [
@@ -538,19 +743,20 @@
       ],
       "L": 29957.32273553991,
       "epsilon": 0.05,
+      "delta": 0.25,
       "opciones": [
         {
           "opcion": "Servicio asistido (nivel 2)",
           "theta_min": 0.07733333333333334,
           "p_theta_bajo_min": 0.02638755713758148,
-          "van_caja_medio": 22403.923277221795,
-          "valor_economico_medio": 13458.36535996545,
-          "valor_economico_p10": -905.5913974016146,
-          "valor_economico_p90": 29308.696356982335,
-          "caja_minima_p05": -11703.706650180417,
-          "prob_exposicion": 0.00181,
-          "demanda_perdida_media": 6.978577432884557e-05,
-          "delta": 0.7470427986029882,
+          "delta_bayes": 0.7498648582489028,
+          "van_caja_medio": 22181.549021944084,
+          "valor_economico_medio": 13233.702661551895,
+          "valor_economico_p10": -947.3049277066889,
+          "valor_economico_p90": 28839.058183235287,
+          "caja_minima_p05": -12691.862165823204,
+          "prob_exposicion": 0.00183,
+          "demanda_perdida_media": 8.032932929190955e-05,
           "umbrales": {
             "d1_demanda": true,
             "d2_capacidad": true,
@@ -562,14 +768,14 @@
           "opcion": "Producto automatizado (nivel 4)",
           "theta_min": 0.32,
           "p_theta_bajo_min": 0.6870015737330788,
-          "van_caja_medio": -21378.92629628489,
-          "valor_economico_medio": -27370.966596736125,
-          "valor_economico_p10": -79341.77102346875,
-          "valor_economico_p90": 15281.831851600142,
-          "caja_minima_p05": -104925.52909649927,
-          "prob_exposicion": 0.50919,
+          "delta_bayes": NaN,
+          "van_caja_medio": -21345.54237237875,
+          "valor_economico_medio": -27337.891503404946,
+          "valor_economico_p10": -78803.26348777588,
+          "valor_economico_p90": 14809.760419080296,
+          "caja_minima_p05": -106638.98560751602,
+          "prob_exposicion": 0.53303,
           "demanda_perdida_media": 0.0,
-          "delta": 0.2021965750988065,
           "umbrales": {
             "d1_demanda": false,
             "d2_capacidad": true,
@@ -579,7 +785,9 @@
         }
       ],
       "decision": "Servicio asistido (nivel 2)",
-      "valor": 13458.36535996545
+      "valor": 13233.702661551895,
+      "error_mc": 38.02203133467216,
+      "decision_valor_esperado": "Servicio asistido (nivel 2)"
     }
   }
 }

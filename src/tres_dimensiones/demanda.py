@@ -11,6 +11,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import IntEnum
 
+import math
+
+import numpy as np
 from scipy import stats
 
 
@@ -33,11 +36,17 @@ class CreenciaConversion:
     beta: float = 1.0
 
     def __post_init__(self) -> None:
-        if self.alpha <= 0 or self.beta <= 0:
+        if not (math.isfinite(self.alpha) and math.isfinite(self.beta)) or self.alpha <= 0 or self.beta <= 0:
             raise ValueError("Los parametros de la Beta deben ser positivos")
 
     def actualizar(self, ofertas: int, compras: int) -> "CreenciaConversion":
-        """Actualiza con n ofertas cualificadas y k compras de nivel 4."""
+        """Actualiza con n ofertas cualificadas y k compras de nivel 4.
+
+        Supone ensayos intercambiables con una conversion theta comun.
+        """
+        if not all(isinstance(v, (int, np.integer)) and not isinstance(v, bool)
+                   for v in (ofertas, compras)):
+            raise ValueError("ofertas y compras deben ser enteros")
         if not 0 <= compras <= ofertas:
             raise ValueError("Se requiere 0 <= compras <= ofertas")
         return CreenciaConversion(self.alpha + compras, self.beta + ofertas - compras)
@@ -76,11 +85,13 @@ def conversion_equilibrio(costes_fijos: float, compradores: float, margen_unitar
 
 
 def delta_por_perdidas(beneficio_omitido: float, perdida_lanzamiento: float) -> float:
-    """Tolerancia delta = b / (b + c) de la regla bayesiana de dos acciones.
+    """Umbral b / (b + c) de la regla bayesiana de dos acciones.
 
-    c: perdida esperada si se lanza y theta queda bajo el equilibrio.
-    b: margen perdido si no se lanza y theta lo supera.
-    Lanzar es optimo si Pr(theta < theta_min) <= b / (b + c).
+    Con A = {theta < theta_min}, p = Pr(A) y V el valor de lanzar frente a
+    descartar, si c = -E[V | A] y b = E[V | no A] (ambos positivos), entonces
+    E[V] >= 0 equivale a p <= b / (b + c). Con esos valores el umbral de
+    demanda coincide con el criterio de valor esperado; por eso el metodo lo
+    usa como diagnostico y fija delta como restriccion normativa aparte.
     """
     if beneficio_omitido < 0 or perdida_lanzamiento < 0:
         raise ValueError("Las perdidas deben ser no negativas")

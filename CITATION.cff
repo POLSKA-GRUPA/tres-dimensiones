@@ -1,5 +1,6 @@
 cff-version: 1.2.0
-message: "Si usas este software, cítalo junto con el documento de trabajo."
+message: "Si usas este software, cítalo. Cita también el documento de trabajo que lo describe (ver references)."
+type: software
 title: "tres-dimensiones: método de decisión empresarial en tres dimensiones"
 version: 0.1.0
 date-released: 2026-10-27
@@ -16,14 +17,14 @@ keywords:
   - value of information
   - affordable loss
   - reference class forecasting
-preferred-citation:
-  type: report
-  title: "Cuando construir deja de ser el problema: decisión empresarial en tres dimensiones"
-  authors:
-    - family-names: "Martín Alcantara"
-      given-names: "Kenyi"
-      orcid: "https://orcid.org/0009-0000-7175-6137"
-  year: 2026
-  doi: "10.5281/zenodo.23687822"
-  publisher:
-    name: "Zenodo"
+references:
+  - type: report
+    title: "Cuando construir deja de ser el problema: decisión empresarial en tres dimensiones"
+    authors:
+      - family-names: "Martín Alcantara"
+        given-names: "Kenyi"
+        orcid: "https://orcid.org/0009-0000-7175-6137"
+    year: 2026
+    doi: "10.5281/zenodo.23687822"
+    publisher:
+      name: "Zenodo"
