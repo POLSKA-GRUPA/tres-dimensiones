@@ -62,6 +62,19 @@ class Aleatorios:
     u_theta: np.ndarray
     d: np.ndarray
     u_ventas: np.ndarray
+    cola_pesada: bool = False   # True si D tiene varianza infinita (estres de Pareto)
+
+    def __post_init__(self) -> None:
+        n = self.u_theta.shape[0] if self.u_theta.ndim == 1 else -1
+        if n <= 1:
+            raise ValueError("u_theta debe tener forma (n,) con n > 1")
+        if self.d.shape != (n,) or self.u_ventas.ndim != 2 or self.u_ventas.shape[0] != n:
+            raise ValueError("Formas esperadas: u_theta (n,), d (n,), u_ventas (n, meses)")
+        for nombre, u in (("u_theta", self.u_theta), ("u_ventas", self.u_ventas)):
+            if not (np.isfinite(u).all() and ((u > 0) & (u < 1)).all()):
+                raise ValueError(f"{nombre} debe estar en el intervalo abierto (0, 1)")
+        if not (np.isfinite(self.d).all() and (self.d > 0).all()):
+            raise ValueError("d debe ser finito y positivo")
 
     @classmethod
     def generar(cls, semilla: int, n: int, meses: int, desviacion: DesviacionCoste) -> "Aleatorios":
@@ -71,7 +84,8 @@ class Aleatorios:
         tiny = np.finfo(float).tiny
         u_theta = np.clip(rng.random(n), tiny, 1 - 1e-16)
         u_ventas = np.clip(rng.random((n, meses)), tiny, 1 - 1e-16)
-        return cls(u_theta=u_theta, d=desviacion.muestrear(rng, n), u_ventas=u_ventas)
+        return cls(u_theta=u_theta, d=desviacion.muestrear(rng, n), u_ventas=u_ventas,
+                   cola_pesada=desviacion.forma_cola is not None and desviacion.forma_cola <= 2)
 
 
 @dataclass(frozen=True, slots=True)
@@ -91,9 +105,11 @@ class Decision:
     evaluaciones: tuple[EvaluacionOpcion, ...]
     elegida: str
     valor: float
-    error_mc: float
+    error_mc: float | None      # None si la varianza no existe (cola pesada)
     elegida_valor_esperado: str
     valor_valor_esperado: float
+    trayectorias: np.ndarray     # valor por trayectoria de la accion elegida (0 si se descarta)
+    trayectorias_ve: np.ndarray  # idem para la politica de valor esperado sin restricciones
 
 
 def _delta_bayes(valor: np.ndarray, theta: np.ndarray, tmin: float) -> float:
@@ -135,12 +151,21 @@ def decidir(creencia: CreenciaConversion, opciones: tuple[OpcionEntrega, ...],
 
     elegida = mejor([e for e in evaluaciones if e.admisible])
     ev = mejor(evaluaciones)
-    error = 0.0 if elegida is None else float(valores[elegida.opcion].std(ddof=1) / math.sqrt(n))
+    tray = valores[elegida.opcion] if elegida else np.zeros(n)
+    tray_ve = valores[ev.opcion] if ev else np.zeros(n)
     return Decision(creencia, tuple(evaluaciones),
                     elegida.opcion if elegida else DESCARTAR,
-                    elegida.resumen["valor_economico_medio"] if elegida else 0.0, error,
+                    elegida.resumen["valor_economico_medio"] if elegida else 0.0,
+                    _error(tray, aleatorios.cola_pesada),
                     ev.opcion if ev else DESCARTAR,
-                    ev.resumen["valor_economico_medio"] if ev else 0.0)
+                    ev.resumen["valor_economico_medio"] if ev else 0.0, tray, tray_ve)
+
+
+def _error(x: np.ndarray, cola_pesada: bool) -> float | None:
+    """Error estandar de Monte Carlo de la media; no definido con varianza infinita."""
+    if cola_pesada:
+        return None
+    return float(x.std(ddof=1) / math.sqrt(x.size))
 
 
 @dataclass(frozen=True, slots=True)
@@ -162,33 +187,46 @@ class ValorInformacion:
     ramas: tuple[RamaPrueba, ...]
     incremento_politica: float
     evsi_clasico: float
-    error_mc: float
+    error_incremento: float | None
+    error_evsi: float | None
 
     @property
     def realizar(self) -> bool:
-        """La prueba compensa si el incremento de la politica supera su coste
-        con un margen de dos errores de Monte Carlo."""
-        return self.incremento_politica - 2 * self.error_mc > self.coste
+        """La prueba compensa si el incremento de la politica supera su coste.
+
+        Con error de Monte Carlo definido se exige un margen de dos errores;
+        con varianza infinita se compara la estimacion puntual y debe
+        repetirse con otras semillas.
+        """
+        margen = 0.0 if self.error_incremento is None else 2 * self.error_incremento
+        return self.incremento_politica - margen > self.coste
 
 
 def valor_informacion(creencia: CreenciaConversion, ofertas_prueba: int, coste_prueba: float,
                       opciones: tuple[OpcionEntrega, ...], mercado: Mercado,
                       umbrales: Umbrales, aleatorios: Aleatorios) -> ValorInformacion:
+    """Enumera los resultados de la prueba con su probabilidad predictiva exacta.
+
+    Los errores se estiman sobre diferencias emparejadas por trayectoria,
+    porque todas las ramas comparten numeros aleatorios. No incluyen la
+    incertidumbre de seleccion de la accion en cada rama.
+    """
     if not isinstance(ofertas_prueba, int) or ofertas_prueba <= 0:
         raise ValueError("ofertas_prueba debe ser un entero positivo")
     if not (math.isfinite(coste_prueba) and coste_prueba >= 0):
         raise ValueError("coste_prueba debe ser finito y no negativo")
     actual = decidir(creencia, opciones, mercado, umbrales, aleatorios)
     predictiva = stats.betabinom(ofertas_prueba, creencia.alpha, creencia.beta)
-    ramas, esperado, esperado_ev, var = [], 0.0, 0.0, actual.error_mc ** 2
+    ramas = []
+    dif = -actual.trayectorias.copy()
+    dif_ve = -actual.trayectorias_ve.copy()
     for k in range(ofertas_prueba + 1):
         dec = decidir(creencia.actualizar(ofertas_prueba, k), opciones, mercado, umbrales, aleatorios)
         p = float(predictiva.pmf(k))
-        esperado += p * dec.valor
-        esperado_ev += p * dec.valor_valor_esperado
-        var += (p * dec.error_mc) ** 2
+        dif += p * dec.trayectorias
+        dif_ve += p * dec.trayectorias_ve
         ramas.append(RamaPrueba(k, p, dec.elegida, dec.valor,
                                 dec.elegida_valor_esperado, dec.valor_valor_esperado))
     return ValorInformacion(ofertas_prueba, coste_prueba, actual.elegida, actual.valor,
-                            tuple(ramas), esperado - actual.valor,
-                            esperado_ev - actual.valor_valor_esperado, math.sqrt(var))
+                            tuple(ramas), float(dif.mean()), float(dif_ve.mean()),
+                            _error(dif, aleatorios.cola_pesada), _error(dif_ve, aleatorios.cola_pesada))

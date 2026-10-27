@@ -30,6 +30,10 @@ Convenio temporal: construcción en t = 0; contratos, costes variables, costes f
 
 Todos son sustituibles por el decisor. Los casos de ejemplo son hipotéticos.
 
+## Entorno de referencia
+
+Las cifras del documento se generaron con Python 3.14.7, NumPy 2.4.1 y SciPy 1.17.1, semilla 20261027 y 100.000 simulaciones (`ejemplos/resultados_documento.json`).
+
 ## Uso
 
 ```bash
@@ -66,7 +70,7 @@ Es una propuesta normativa sin evaluación empírica todavía. No es asesoramien
 
 ## English summary
 
-Python implementation of a conjunctive, three-dimensional decision rule for small firms when building is cheap and choosing is expensive: Beta-binomial demand updating restricted to actual purchases, lognormal cost overruns with a Pareto stress tail, a chance constraint on cumulative cash (affordable loss), and exact preposterior value of sample information. Defaults are documented and replaceable. Requires Python ≥ 3.10, NumPy and SciPy.
+Python implementation of a conjunctive, three-dimensional decision rule for small firms when building is cheap and choosing is expensive: Beta-binomial demand updating restricted to actual purchases, lognormal cost overruns with a Pareto stress tail, a chance constraint on cumulative cash (affordable loss), and preposterior value of information with exact predictive enumeration of test outcomes and Monte Carlo integration over parameters, reported with paired-trajectory standard errors (undefined under the infinite-variance stress tail). Defaults are documented and replaceable. Requires Python ≥ 3.10, NumPy and SciPy.
 
 ## Cita
 

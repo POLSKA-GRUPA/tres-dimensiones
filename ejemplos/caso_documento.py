@@ -10,6 +10,7 @@ tres_dimensiones.calibracion y se justifican en la seccion 6.4.
 from __future__ import annotations
 
 import json
+import math
 import sys
 
 from tres_dimensiones import (CreenciaConversion, Mercado, OpcionEntrega, Umbrales, decidir,
@@ -64,7 +65,8 @@ def evaluar(creencia, opciones, mercado, desviacion=DESVIACION_CENTRAL, epsilon=
         vi = valor_informacion(creencia, prueba[0], prueba[1], opciones, mercado, u, alea)
         out["prueba"] = {"ofertas": vi.ofertas, "coste": vi.coste,
                          "incremento_politica": vi.incremento_politica,
-                         "evsi_clasico": vi.evsi_clasico, "error_mc": vi.error_mc,
+                         "evsi_clasico": vi.evsi_clasico,
+                         "error_incremento": vi.error_incremento, "error_evsi": vi.error_evsi,
                          "realizar": vi.realizar,
                          "ramas": [{"k": r.compras, "prob": r.probabilidad, "decision": r.decision,
                                     "valor": r.valor} for r in vi.ramas]}
@@ -96,29 +98,45 @@ def casos() -> dict:
     }
 
 
+def _fmt(x) -> str:
+    return "no definido (varianza infinita)" if x is None else f"{x:,.0f}"
+
+
+def _sin_nan(obj):
+    """Diagnosticos indefinidos (NaN) como null para producir JSON estandar."""
+    if isinstance(obj, float) and math.isnan(obj):
+        return None
+    if isinstance(obj, dict):
+        return {k: _sin_nan(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [_sin_nan(v) for v in obj]
+    return obj
+
+
 def _imprimir(nombre: str, r: dict) -> None:
     lo, hi = r["ic90"]
     print(f"\n== {nombre} ==\nBeta({r['creencia'][0]:g}, {r['creencia'][1]:g}) media {r['media']:.3f} "
           f"IC90 {lo:.3f}-{hi:.3f} | L {r['L']:,.0f} EUR | epsilon {r['epsilon']}")
     for o in r["opciones"]:
         print(f"  {o['opcion']}: theta_min {o['theta_min']:.3f}, Pr(theta<min) {o['p_theta_bajo_min']:.3f}, "
-              f"delta bayes {o['delta_bayes']:.3f}, valor econ. {o['valor_economico_medio']:,.0f} "
+              f"delta bayes {'n.d.' if math.isnan(o['delta_bayes']) else format(o['delta_bayes'], '.3f')}, valor econ. {o['valor_economico_medio']:,.0f} "
               f"(P10 {o['valor_economico_p10']:,.0f}; P90 {o['valor_economico_p90']:,.0f}), "
               f"Pr(exposicion) {o['prob_exposicion']:.3f}, {o['umbrales']}")
-    print(f"  DECISION: {r['decision']} ({r['valor']:,.0f} EUR, error MC {r['error_mc']:,.0f}); "
+    print(f"  DECISION: {r['decision']} ({r['valor']:,.0f} EUR, error MC {_fmt(r['error_mc'])}); "
           f"criterio de valor esperado sin restricciones: {r['decision_valor_esperado']}")
     if "prueba" in r:
         p = r["prueba"]
         for rama in p["ramas"]:
             print(f"    k={rama['k']} p={rama['prob']:.3f} -> {rama['decision']} ({rama['valor']:,.0f})")
         print(f"  Incremento de la politica {p['incremento_politica']:,.0f} (EVSI clasico {p['evsi_clasico']:,.0f}; "
-              f"error MC {p['error_mc']:,.0f}) frente a coste {p['coste']:,.0f}: realizar {p['realizar']}")
+              f"errores MC {_fmt(p['error_incremento'])} y {_fmt(p['error_evsi'])}) frente a coste "
+              f"{p['coste']:,.0f}: realizar {p['realizar']}")
 
 
 if __name__ == "__main__":
     resultados = casos()
     if "--json" in sys.argv:
-        print(json.dumps(resultados, indent=2, ensure_ascii=False))
+        print(json.dumps(_sin_nan(resultados), indent=2, ensure_ascii=False, allow_nan=False))
     else:
         for nombre, r in resultados.items():
             if nombre == "sensibilidad_A":

@@ -187,7 +187,7 @@ def test_politica_invariante_tiene_incremento_nulo_salvo_error_mc():
     vi = valor_informacion(CreenciaConversion().actualizar(12, 3), 5, 400, (OPCION,), MERCADO,
                            UMBRALES, _alea())
     assert all(r.decision == vi.decision_actual for r in vi.ramas)
-    assert abs(vi.incremento_politica) <= 3 * vi.error_mc + 1e-9
+    assert abs(vi.incremento_politica) <= 3 * vi.error_incremento + 1e-9
     assert not vi.realizar
 
 
@@ -201,7 +201,8 @@ def test_incremento_de_politica_restringida_puede_ser_negativo():
     u = Umbrales(delta=0.11, epsilon=0.99, perdida=1e9)
     vi = valor_informacion(CreenciaConversion(), 1, 0, (op,), mercado, u, alea)
     assert vi.incremento_politica == pytest.approx(-116.67, abs=3)
-    assert vi.evsi_clasico >= -3 * vi.error_mc
+    assert vi.evsi_clasico >= -3 * vi.error_evsi
+    assert vi.error_evsi > 0
 
 
 def test_probabilidades_predictivas_suman_uno():
@@ -218,3 +219,23 @@ def test_reproducibilidad_y_estabilidad_entre_semillas():
     otra = decidir(c, (OPCION,), MERCADO, UMBRALES, _alea(semilla=2))
     assert otra.elegida == a.elegida
     assert abs(otra.valor - a.valor) <= 5 * math.hypot(a.error_mc, otra.error_mc)
+
+
+def test_cola_pesada_no_declara_error_estandar():
+    alea = _alea(5_000, DesviacionCoste(1.25, 3.0, alfa_densidad=2.3))
+    assert alea.cola_pesada
+    dec = decidir(CreenciaConversion().actualizar(12, 3), (OPCION,), MERCADO, UMBRALES, alea)
+    assert dec.error_mc is None
+
+
+@pytest.mark.parametrize("u", [0.0, 1.0, float("nan")])
+def test_aleatorios_rechaza_uniformes_no_interiores(u):
+    base = _alea(10)
+    u_theta = base.u_theta.copy(); u_theta[0] = u
+    with pytest.raises(ValueError):
+        Aleatorios(u_theta, base.d, base.u_ventas)
+
+
+def test_aleatorios_rechaza_tamano_insuficiente():
+    with pytest.raises(ValueError):
+        Aleatorios(np.array([0.5]), np.array([1.0]), np.full((1, 12), 0.5))
