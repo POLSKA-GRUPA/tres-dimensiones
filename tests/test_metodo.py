@@ -12,7 +12,8 @@ from tres_dimensiones import (DESCARTAR, CreenciaConversion, DesviacionCoste, Me
 from tres_dimensiones.adaptadores.motor_caja import financiacion_por_motor, motor_referencia
 from tres_dimensiones.exposicion import caja_desde_flujos
 from tres_dimensiones.modelo import simular_opcion
-from tres_dimensiones.regla import Aleatorios, valor_informacion_replicado
+from tres_dimensiones.regla import (Aleatorios, RamaPrueba, ValorInformacion,
+                                   ValorInformacionReplicado, valor_informacion_replicado)
 
 OPCION = OpcionEntrega("Prueba", 2, construccion=3_000, fijo_mensual=150, coste_variable=120,
                        horas_contrato=4.0, horas_fijas_mes=4, coste_hora=45, capacidad_mes=60)
@@ -253,3 +254,16 @@ def test_replicas_independientes_recogen_incertidumbre_de_seleccion():
     assert rep.decisiones_estables
     assert not rep.realizar
     assert rep.error_replicas >= 0
+
+
+def _replica(decision_rama: str, incremento: float) -> ValorInformacion:
+    rama = RamaPrueba(0, 1.0, decision_rama, incremento, decision_rama, incremento)
+    return ValorInformacion(1, 0.0, "A", 0.0, (rama,), incremento, incremento, 1.0, 1.0)
+
+
+def test_replicas_inestables_son_indeterminadas_y_no_recomiendan_probar():
+    rep = ValorInformacionReplicado((_replica("A", 5_000.0), _replica("B", 5_100.0)), coste=10.0)
+    assert rep.indeterminado
+    assert not rep.realizar
+    estable = ValorInformacionReplicado((_replica("A", 5_000.0), _replica("A", 5_100.0)), coste=10.0)
+    assert not estable.indeterminado and estable.realizar

@@ -69,6 +69,7 @@
       "error_replicas": 3.439039402478283,
       "evsi_clasico_medio": -4.0692979487102665,
       "decisiones_estables": true,
+      "indeterminado": false,
       "realizar": false
     },
     "prueba": {
@@ -170,6 +171,7 @@
       "error_replicas": 8.34687226506213,
       "evsi_clasico_medio": 4084.275411236567,
       "decisiones_estables": true,
+      "indeterminado": false,
       "realizar": true
     },
     "prueba": {

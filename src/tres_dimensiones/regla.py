@@ -267,7 +267,21 @@ class ValorInformacionReplicado:
         return len(firmas) == 1
 
     @property
+    def indeterminado(self) -> bool:
+        """Las replicas no coinciden en las acciones elegidas.
+
+        Cerca de los umbrales, la seleccion de la accion depende del ruido de
+        simulacion y la media de las replicas puede estar sesgada con n fijo.
+        El resultado es indeterminado hasta que, aumentando n, todas las
+        replicas elijan lo mismo.
+        """
+        return not self.decisiones_estables
+
+    @property
     def realizar(self) -> bool:
+        """Solo se recomienda la prueba con decisiones estables entre replicas."""
+        if self.indeterminado:
+            return False
         return self.incremento_medio - 2 * self.error_replicas > self.coste
 
 
@@ -277,6 +291,9 @@ def valor_informacion_replicado(creencia: CreenciaConversion, ofertas_prueba: in
                                 semillas: tuple[int, ...], n: int) -> ValorInformacionReplicado:
     if len(semillas) < 2 or len(set(semillas)) != len(semillas):
         raise ValueError("Se requieren al menos dos semillas distintas")
+    """Si el resultado es indeterminado, repetir con mayor n hasta que las
+    replicas coincidan; la convergencia se comprueba asi, no con un error
+    estandar, porque el sesgo de seleccion no desaparece al promediar."""
     replicas = tuple(
         valor_informacion(creencia, ofertas_prueba, coste_prueba, opciones, mercado, umbrales,
                           Aleatorios.generar(s, n, mercado.meses, desviacion))

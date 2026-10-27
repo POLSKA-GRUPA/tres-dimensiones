@@ -71,6 +71,7 @@ def evaluar(creencia, opciones, mercado, desviacion=DESVIACION_CENTRAL, epsilon=
                            "error_replicas": rep.error_replicas,
                            "evsi_clasico_medio": rep.evsi_clasico_medio,
                            "decisiones_estables": rep.decisiones_estables,
+                           "indeterminado": rep.indeterminado,
                            "realizar": rep.realizar}
         out["prueba"] = {"ofertas": vi.ofertas, "coste": vi.coste,
                          "incremento_politica": vi.incremento_politica,
