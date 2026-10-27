@@ -289,11 +289,11 @@ def valor_informacion_replicado(creencia: CreenciaConversion, ofertas_prueba: in
                                 opciones: tuple[OpcionEntrega, ...], mercado: Mercado,
                                 umbrales: Umbrales, desviacion: DesviacionCoste,
                                 semillas: tuple[int, ...], n: int) -> ValorInformacionReplicado:
-    if len(semillas) < 2 or len(set(semillas)) != len(semillas):
-        raise ValueError("Se requieren al menos dos semillas distintas")
     """Si el resultado es indeterminado, repetir con mayor n hasta que las
     replicas coincidan; la convergencia se comprueba asi, no con un error
     estandar, porque el sesgo de seleccion no desaparece al promediar."""
+    if len(semillas) < 2 or len(set(semillas)) != len(semillas):
+        raise ValueError("Se requieren al menos dos semillas distintas")
     replicas = tuple(
         valor_informacion(creencia, ofertas_prueba, coste_prueba, opciones, mercado, umbrales,
                           Aleatorios.generar(s, n, mercado.meses, desviacion))
