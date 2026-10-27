@@ -6,8 +6,9 @@ monetario de construccion practicamente nulo; una muestra gratuita en uso y
 ninguna compra todavia (evidencia de nivel 2, que no actualiza theta).
 
 Datos desconocidos que se tratan como sensibilidad declarada: horas propias
-por diagnostico, compradores cualificados alcanzables en doce meses y coste
-fijo mensual. No se presentan como observados.
+por diagnostico y compradores cualificados alcanzables en doce meses. Se
+suponen ademas, sin variarlos, 30 euros mensuales de alojamiento y servicios
+y dos horas propias fijas al mes. Nada de ello se presenta como observado.
 
     python ejemplos/caso_cuantofacturan.py           # tabla legible
     python ejemplos/caso_cuantofacturan.py --json    # resultados para el documento
@@ -60,13 +61,17 @@ def caso(horas: float, compradores: int) -> dict:
     }
 
 
+def _theta(valor: float | None) -> str:
+    return "sin margen" if valor is None else f"{valor:.3f}"
+
+
 def main() -> None:
     filas = [caso(h, c) for h in HORAS for c in COMPRADORES]
     if "--json" in sys.argv:
         print(json.dumps(filas, indent=2, ensure_ascii=False, allow_nan=False))
         return
     for f in filas:
-        print(f"horas {f['horas']:>3} | compradores {f['compradores']:>3} | theta_min {f['theta_min']:.3f} | "
+        print(f"horas {f['horas']:>3} | compradores {f['compradores']:>3} | theta_min {_theta(f['theta_min'])} | "
               f"Pr(theta<min) {f['p_theta_bajo_min']:.3f} | valor {f['valor']:>9,.0f} (P10 {f['p10']:>8,.0f}) | "
               f"Pr(exp) {f['prob_exposicion']:.3f} | {f['decision']} | prueba +{f['incremento_prueba']:,.0f} "
               f"| ramas {''.join('L' if b['decision'].startswith('Diag') else 'd' for b in f['ramas'])}")
